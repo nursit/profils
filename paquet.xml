@@ -1,0 +1,21 @@
+<paquet
+	prefix="profil"
+	categorie="outil"
+	version="0.1.0"
+	etat="test"
+	compatibilite="];["
+	logo="prive/themes/spip/images/profil-32.png"
+	schema="0.2.6"
+>	
+
+	<nom>profils</nom>
+	<!-- Comptes profils -->
+
+	<pipeline nom="declarer_tables_objets_sql" inclure="profil_administrations.php" />
+	<pipeline nom="recuperer_fond" inclure="profil_pipelines.php" />
+	<pipeline nom="afficher_fiche_objet" inclure="profil_pipelines.php" />
+	<pipeline nom="afficher_contenu_objet" inclure="profil_pipelines.php" />
+
+	<necessite nom="saisies" compatibilite="];[" />
+	<necessite nom="pays" compatibilite="];[" />
+</paquet>

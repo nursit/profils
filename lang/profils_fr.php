@@ -7,8 +7,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// L
 	'label_auteur_coordonnees' => "Coordonnées",
 	'label_auteur_name' => 'Nom',
-	'label_auteur_prenom' => 'Prénom',
-	'label_auteur_adresse_1' => 'Adresse',
+    'label_auteur_prenom' => 'Prénom',
+    'label_auteur_societe' => 'Société',
+    'label_auteur_adresse_1' => 'Adresse',
 	'label_auteur_adresse_2' => 'Complément',
 	'label_auteur_adresse_bp' => 'Boite Postale',
 	'label_auteur_adresse_cp' => 'Code Postal',

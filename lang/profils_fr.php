@@ -26,6 +26,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_adresse_ville' => 'Ville',
 	'info_adresse_pays' => 'Pays',
 
+    'titre_profil'=> 'Information lecteur',
+    'explications_profil'=> 'Toutes les informations vous concernant, et qui permettent de vous envoyer les reçus fiscaux par exemple',
+    'titre_mot_de_passe' => 'Changement mot de passe',
+    'explications_mot_de_passe' => 'Il est possible de changer votre mot de passe ici.'
 );
 
 ?>

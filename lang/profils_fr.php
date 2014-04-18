@@ -35,8 +35,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
     'titre_commentaire' => 'Commentaires',
     'explications_commentaire' => 'Les derniers commentaires.',
 
+    'titre_newsletter' => 'Newsletter',
+    'explications_newsletter' => "Les dernières lettre d'information." ,
 
-'commentaire_votre' => 'Votre',
+    'commentaire_votre' => 'Votre',
     'commentaire_vos' => 'Vos',
     'commentaire_minus' => 'commentaire',
     'commentaires_minus' => 'commentaires',

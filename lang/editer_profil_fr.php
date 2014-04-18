@@ -3,7 +3,8 @@
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 
 $GLOBALS[$GLOBALS['idx_lang']] = array(
-	'legend_coordonnees' => "Coordonnées",
+    'legend_coordonnees' => "Coordonnées",
+    'legend_newsletter' => "Newsletter",
 	'label_name' => 'Nom',
 	'label_prenom' => 'Prénom',
 	'label_email' => 'E-mail',

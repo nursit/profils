@@ -28,8 +28,20 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
     'titre_profil'=> 'Information lecteur',
     'explications_profil'=> 'Toutes les informations vous concernant, et qui permettent de vous envoyer les reçus fiscaux par exemple',
+
     'titre_mot_de_passe' => 'Changement mot de passe',
-    'explications_mot_de_passe' => 'Il est possible de changer votre mot de passe ici.'
+    'explications_mot_de_passe' => 'Il est possible de changer votre mot de passe ici.',
+
+    'titre_commentaire' => 'Commentaires',
+    'explications_commentaire' => 'Les derniers commentaires.',
+
+
+'commentaire_votre' => 'Votre',
+    'commentaire_vos' => 'Vos',
+    'commentaire_minus' => 'commentaire',
+    'commentaires_minus' => 'commentaires',
+
+
 );
 
 ?>

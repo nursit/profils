@@ -15,6 +15,7 @@
 	<pipeline nom="recuperer_fond" inclure="profils_pipelines.php" />
 	<pipeline nom="afficher_fiche_objet" inclure="profils_pipelines.php" />
 	<pipeline nom="afficher_contenu_objet" inclure="profils_pipelines.php" />
+	<pipeline nom="formulaire_charger" inclure="profils_pipelines.php" />
 
 	<necessite nom="saisies" compatibilite="];[" />
 	<necessite nom="pays" compatibilite="];[" />

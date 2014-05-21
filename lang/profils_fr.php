@@ -7,9 +7,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// L
 	'label_auteur_coordonnees' => "Coordonnées",
 	'label_auteur_name' => 'Nom',
-    'label_auteur_prenom' => 'Prénom',
-    'label_auteur_societe' => 'Société',
-    'label_auteur_adresse_1' => 'Adresse',
+	'label_auteur_prenom' => 'Prénom',
+	'label_auteur_societe' => 'Société',
+	'label_auteur_adresse_1' => 'Adresse',
 	'label_auteur_adresse_2' => 'Complément',
 	'label_auteur_adresse_bp' => 'Boite Postale',
 	'label_auteur_adresse_cp' => 'Code Postal',
@@ -26,11 +26,18 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_adresse_ville' => 'Ville',
 	'info_adresse_pays' => 'Pays',
 
-    'commentaire_votre' => 'Votre',
-    'commentaire_vos' => 'Vos',
-    'commentaire_minus' => 'commentaire',
-    'commentaires_minus' => 'commentaires',
+	'commentaire_votre' => 'Votre',
+	'commentaire_vos' => 'Vos',
+	'commentaire_minus' => 'commentaire',
+	'commentaires_minus' => 'commentaires',
 
+	'form_inscription_voici1' => 'Voici vos identifiants pour vous connecter plus tard sur @nom_site_spip@.
+(Votre compte est accessible à l\'adresse @adresse_login@ ).',
+
+	'signature_equipe' => 'L\'équipe de @nom_site_spip@',
+
+	'message_souscription_info_creation_profil' => 'Un compte vous a été créé automatiquement. Vous allez recevoir à l\'adresse @email@ les informations pour y accèder.',
+	'message_souscription_info_deja_profil' => 'Cette souscription a été associée à votre compte déjà existant.',
 
 );
 

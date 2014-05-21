@@ -1,0 +1,25 @@
+[(#REM)
+
+  Squelette
+  (c) 2009 SPIP
+  Distribue sous licence GPL
+
+][(#HTTP_HEADER{Content-type: text/plain[; charset=(#CHARSET)]})]
+[\[(#NOM_SITE_SPIP|concat{'\] : ',<:form_forum_identifiants:>}|nettoyer_titre_email)]
+
+<:form_forum_bonjour{nom=#ENV{nom}}:>
+
+#SET{url_site,#URL_SITE_SPIP/}
+#SET{url_login,#URL_PAGE{profil}|url_absolue}
+<:profils:form_inscription_voici1{nom_site_spip=#NOM_SITE_SPIP,adresse_site=#GET{url_site},adresse_login=#GET{url_login}}:>
+
+- <:form_forum_login:>[ (#ENV{email,email})]
+- <:form_forum_pass:>[ (#ENV{pass,pass})]
+
+
+----
+<:profils:signature_equipe{nom_site_spip=#NOM_SITE_SPIP}:>
+
+<:form_forum_message_auto:>
+
+#FILTRE{supprimer_tags|filtrer_entites|trim}

@@ -1,7 +1,7 @@
 <paquet
 	prefix="profils"
 	categorie="outil"
-	version="0.2.0"
+	version="0.4.0"
 	etat="test"
 	compatibilite="];["
 	logo="prive/themes/spip/images/profil-32.png"
@@ -11,11 +11,13 @@
 	<nom>profils</nom>
 	<!-- Comptes profils -->
 
-	<pipeline nom="declarer_tables_objets_sql" inclure="profils_administrations.php" />
 	<pipeline nom="afficher_fiche_objet" inclure="profils_pipelines.php" />
 	<pipeline nom="afficher_contenu_objet" inclure="profils_pipelines.php" />
+	<pipeline nom="declarer_tables_objets_sql" inclure="profils_administrations.php" />
 	<pipeline nom="formulaire_fond" inclure="profils_pipelines.php" />
 	<pipeline nom="formulaire_charger" inclure="profils_pipelines.php" />
+	<pipeline nom="formulaire_traiter" inclure="profils_pipelines.php" />
+	<pipeline nom="pre_edition" inclure="profils_pipelines.php" />
 
 	<necessite nom="saisies" compatibilite="];[" />
 	<necessite nom="pays" compatibilite="];[" />

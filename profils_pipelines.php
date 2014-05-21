@@ -9,16 +9,28 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 
-function profils_recuperer_fond($flux){
-	if ($flux['args']['fond'] == 'formulaires/editer_auteur'){
-		if ($p = strpos($flux['data']['texte'],'<!--extra-->')){
+/**
+ * Enrichir le formulaire editer_auteur avec les champs du profil
+ * @param $flux
+ * @return mixed
+ */
+function profils_formulaire_fond($flux){
+	if ($flux['args']['form'] == 'editer_auteur'){
+		if ($p = strpos($flux['data'],'<!--extra-->')){
 			$complement = recuperer_fond('formulaires/inc-saisie-profil-profil',$flux['args']['contexte']);
-			$flux['data']['texte'] = substr_replace($flux['data']['texte'],$complement,$p,0);
+			$flux['data'] = substr_replace($flux['data'],$complement,$p,0);
 		}
 	}
 	return $flux;
 }
 
+/**
+ * Pre-charger les infos profils (nom, adresse, tel) dans le formulaire souscription
+ * si le visiteur est loge
+ *
+ * @param array $flux
+ * @return array
+ */
 function profils_formulaire_charger($flux){
 
 	if ($flux['args']['form']=='souscription'

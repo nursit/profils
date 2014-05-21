@@ -34,6 +34,7 @@ function profils_formulaire_fond($flux){
 function profils_formulaire_charger($flux){
 
 	if ($flux['args']['form']=='souscription'
+		AND !test_espace_prive()
 	  AND isset($GLOBALS['visiteur_session']['id_auteur'])
 	  AND $GLOBALS['visiteur_session']['id_auteur']){
 

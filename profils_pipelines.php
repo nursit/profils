@@ -38,6 +38,7 @@ function profils_formulaire_charger($flux){
 	  AND isset($GLOBALS['visiteur_session']['id_auteur'])
 	  AND $GLOBALS['visiteur_session']['id_auteur']){
 
+		$flux['data']['recu_fiscal'] = 'on';
 		if (isset($GLOBALS['visiteur_session']['name']) AND $GLOBALS['visiteur_session']['name'])
 			$flux['data']['nom'] = $GLOBALS['visiteur_session']['name'];
 		if (isset($GLOBALS['visiteur_session']['prenom']) AND $GLOBALS['visiteur_session']['prenom'])

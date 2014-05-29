@@ -26,11 +26,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_adresse_ville' => 'Ville',
 	'info_adresse_pays' => 'Pays',
 
-	'commentaire_votre' => 'Votre',
-	'commentaire_vos' => 'Vos',
-	'commentaire_minus' => 'commentaire',
-	'commentaires_minus' => 'commentaires',
-
 	'form_inscription_voici1' => 'Voici vos identifiants pour vous connecter plus tard sur @nom_site_spip@.
 (Votre compte est accessible à l\'adresse @adresse_login@ ).',
 

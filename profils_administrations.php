@@ -60,6 +60,11 @@ function profils_upgrade($nom_meta_base_version,$version_cible){
 	// creation initiale
 	$maj['create'] = array(
 		array('maj_tables',array('spip_auteurs')),
+		array('profils_importer_vieilles_souscriptions'),
+	);
+
+	$maj['0.3.0'] = array(
+		array('profils_importer_vieilles_souscriptions'),
 	);
 
 
@@ -69,34 +74,35 @@ function profils_upgrade($nom_meta_base_version,$version_cible){
 }
 
 
-function profils_inscrire_newsletter(){
-	$subscriber = charger_fonction("subscriber","newsletter");
-	$subscribe = charger_fonction("subscribe","newsletter");
-	$GLOBALS['notification_instituermailsubscriber_status'] = false; // pas de notif pour cet import
+function profils_importer_vieilles_souscriptions(){
 
-	$res = sql_select("email,nom","spip_auteurs","statut=".sql_quote("6forum"));
-	while ($row = sql_fetch($res)){
-		$infos = $subscriber($row['email']);
-		if ($infos
-			AND $infos['status']=='on'
-			AND in_array('newsletter',$infos['listes'])){
+
+	$sous = sql_allfetsel("*","spip_souscriptions","id_auteur=0 AND (abo_statut<>".sql_quote('non')." OR recu_fiscal=".sql_quote("on").")");
+	#var_dump(count($sous));
+
+	foreach($sous as $sou){
+		#var_dump($sou);
+		$email = $sou['courriel'];
+		if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email)." AND statut<>".sql_quote("5poub"))){
+			$id_auteur = $row['id_auteur'];
+			sql_updateq("spip_souscriptions",array('id_auteur'=>$id_auteur),"id_auteur=0 AND id_souscription=".intval($sou['id_souscription']));
 		}
 		else {
-			$subscribe($row['email'],array('nom'=>$row['nom'],'listes'=>array('profils'),'force'=>true));
+			include_spip("inc/profils");
+			$id_auteur = profils_creer_depuis_souscription($sou,false);
 		}
+		if ($id_auteur){
+			$trans = sql_allfetsel("id_objet","spip_souscriptions_liens","id_souscription=".intval($sou['id_souscription'])." AND objet=".sql_quote('transaction'));
+			$trans = array_map('reset',$trans);
+			sql_updateq("spip_transactions",array('id_auteur'=>$id_auteur),"id_auteur=0 AND ".sql_in('id_transaction',$trans));
+		}
+
+		#var_dump($id_auteur);
+		if (time()>_TIME_OUT)
+			return;
+
 	}
 
-	$res = sql_select("A.email,A.nom","spip_auteurs AS A JOIN spip_auteurs_liens AS L ON A.id_auteur = L.id_auteur","A.statut=".sql_quote("6forum")." AND L.objet=".sql_quote('site'),"A.id_auteur");
-	while ($row = sql_fetch($res)){
-		$infos = $subscriber($row['email']);
-		if ($infos
-			AND $infos['status']=='on'
-			AND in_array('profils_avec_sites',$infos['listes'])){
-		}
-		else {
-			$subscribe($row['email'],array('nom'=>$row['nom'],'listes'=>array('profils_avec_sites'),'force'=>true));
-		}
-	}
 }
 
 /**

@@ -72,25 +72,7 @@
 						<span class='erreur_message'>(#GET{erreurs})</span>
 						]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
 					</li>
-					#SET{name,tel_mobile}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-					<li class="editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
-						<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
-						<span class='erreur_message'>(#GET{erreurs})</span>
-						]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
-					</li>
 				</fieldset>
-			</li>
-			#SET{name,newsletter}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-			<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
-				<span class='erreur_message'>(#GET{erreurs})</span>
-				]
-				#SET{val,0}
-				<input type="hidden" name="#GET{name}" value="#GET{val}" />
-				#SET{val,1}
-				<div class="choix">
-					<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
-					<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
-				</div>
 			</li>
 
 		</ul>

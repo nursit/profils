@@ -31,6 +31,7 @@ function formulaires_editer_profil_charger_dist($id_auteur){
 		$valeurs[$champ] = $auteur[$champ];
 
 	// abonne a la newsletter ?
+	/*
 	if ($auteur['email']){
 		$subscriber = charger_fonction("subscriber","newsletter");
 		$infos = $subscriber($auteur['email']);
@@ -38,7 +39,7 @@ function formulaires_editer_profil_charger_dist($id_auteur){
 			AND $infos['status']=='on'
 			AND in_array('profils',$infos['listes']))
 			$valeurs['newsletter'] = 1;
-	}
+	}*/
 
 	return $valeurs;
 }
@@ -85,6 +86,7 @@ function formulaires_editer_profil_traiter_dist($id_auteur){
 	set_request('nom',_request('prenom').' '._request('name'));
 	$res = formulaires_editer_objet_traiter('auteur',$id_auteur);
 
+	/*
 	if ($email = _request('email')){
 
 	  if (_request('newsletter')){
@@ -97,6 +99,7 @@ function formulaires_editer_profil_traiter_dist($id_auteur){
 		}
 		set_request('newsletter');
 	}
+	*/
 
 
 	if (isset($res['message_ok'])){

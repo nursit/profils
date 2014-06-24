@@ -74,15 +74,31 @@ function formulaires_editer_profil_verifier_dist($id_auteur){
 function formulaires_editer_profil_traiter_dist($id_auteur){
 	$auteur = sql_fetsel('*','spip_auteurs','id_auteur='.intval($id_auteur));
 
-	if ($auteur['email']==$auteur['login']
-	  AND _request('email')
-	  AND _request('email')!==$auteur['email'])
-		set_request('login',_request('email'));
+	// si l'email change
+	if (_request('email')
+	  AND _request('email')!==$auteur['email']){
+
+		// si c'était le login, changer aussi le login
+		if ($auteur['email']==$auteur['login'])
+			set_request('login',_request('email'));
+
+	}
 
 	include_spip('inc/editer');
 	// renseigner le nom de la table auteurs :
 	set_request('nom',_request('prenom').' '._request('name'));
 	$res = formulaires_editer_objet_traiter('auteur',$id_auteur);
+
+	// si l'email change
+	if (_request('email')
+	  AND _request('email')!==$auteur['email']){
+
+		// securite si jamais la modif en base n'a pas eu lieu
+		$new_email = sql_getfetsel('email','spip_auteurs','id_auteur='.intval($id_auteur));
+
+		// updater les abonnements dans mailsubscribers
+		sql_updateq("spip_mailsubscribers",array('email'=>$new_email),"email=".sql_quote($auteur['email']));
+	}
 
 	/*
 	if ($email = _request('email')){

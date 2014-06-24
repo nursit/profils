@@ -1,0 +1,47 @@
+[(#REM)
+
+Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_html
+
+
+]
+<title>[[(#NOM_SITE_SPIP|textebrut)]] Accès à votre espace lecteur</title>
+<body>
+	<div class="header">
+		<h2>Accès à votre espace lecteur</h2>
+
+		<hr/>
+	</div>
+
+	<p><:form_forum_bonjour{nom=#ENV{nom}}:></p>
+
+	<p>Vous venez de créer votre espace lecteur.
+	<br />Il vous permet de :</p>
+	<ul>
+		<li>gérer vos dons</li>
+		<li>gérer vos abonnements à la newsletter et la faire découvrir à vos proches&nbsp;;</li>
+		<li>poster des commentaires et suivre les discussions auxquelles vous participez&nbsp;;</li>
+		<li>selectionner vos articles favoris pour les lire au calme&nbsp;;</li>
+		<li>modifier votre adresse courriel et vos coordonnées.</li>
+	</ul>
+
+	[(#SET{url,[<br><center>(#INCLURE{fond=emails/inc-button,url=#ENV{url_confirm},label=<:bouton_confirmer_email:>,width=250px,bgcolor=#aaaaaa,bordercolor=#888888})</center>]})]
+	<:form_forum_confirmer_email{url_confirm=#GET{url}}:>
+
+	<p>Pour accéder à cet espace, il vous suffit de cliquer sur le lien suivant <a href="[(#URL_PAGE{profil}|url_absolue)]">[(#URL_PAGE{profil}|url_absolue)]</a>
+		<br />et de saisir le mot de passe que voici&nbsp;:[<b>(#ENV{pass,pass})</b>] (votre login est votre adresse courriel).</p>
+
+
+	<p>Pensez à archiver ce message.</p>
+	<p>Nous vous remercions</p>
+	<p>La rédaction de <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a></p>
+
+	<div class="footer">
+		<hr/>
+		<p>
+		<:form_forum_login:>[ (#ENV{email,email})]<br />
+		<:form_forum_pass:>[ (#ENV{pass,pass})]
+		</p>
+	</div>
+
+</body>
+#FILTRE{facteur_email_wrap_to_html}

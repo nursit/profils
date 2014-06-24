@@ -43,17 +43,8 @@ function profils_formulaire_charger($flux){
 			$flux['data']['nom'] = $GLOBALS['visiteur_session']['name'];
 		if (isset($GLOBALS['visiteur_session']['prenom']) AND $GLOBALS['visiteur_session']['prenom'])
 			$flux['data']['prenom'] = $GLOBALS['visiteur_session']['prenom'];
-
-		if (isset($GLOBALS['visiteur_session']['adresse_1'])){
-			$adresse = $GLOBALS['visiteur_session']['adresse_1']
-				. "\n" . $GLOBALS['visiteur_session']['adresse_2']
-				. "\n" . $GLOBALS['visiteur_session']['adresse_bp'];
-			$adresse = explode("\n",$adresse);
-			$adresse = array_filter($adresse);
-			$adresse = trim(implode("\n",$adresse));
-			if ($adresse)
-				$flux['data']['adresse'] = $adresse;
-		}
+		if (isset($GLOBALS['visiteur_session']['adresse']) AND $GLOBALS['visiteur_session']['adresse'])
+			$flux['data']['adresse'] = $GLOBALS['visiteur_session']['adresse'];
 		if (isset($GLOBALS['visiteur_session']['adresse_cp']) AND $GLOBALS['visiteur_session']['adresse_cp'])
 			$flux['data']['code_postal'] = $GLOBALS['visiteur_session']['adresse_cp'];
 		if (isset($GLOBALS['visiteur_session']['adresse_ville']) AND $GLOBALS['visiteur_session']['adresse_ville'])

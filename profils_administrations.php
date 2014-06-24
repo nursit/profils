@@ -20,9 +20,7 @@ function profils_declarer_tables_objets_sql($tables){
 	$tables['spip_auteurs']['field']['name'] = "text DEFAULT '' NOT NULL";
 	$tables['spip_auteurs']['field']['prenom'] = "text DEFAULT '' NOT NULL";
 	$tables['spip_auteurs']['field']['societe'] = "text DEFAULT '' NOT NULL";
-	$tables['spip_auteurs']['field']['adresse_1'] = "text DEFAULT '' NOT NULL";
-	$tables['spip_auteurs']['field']['adresse_2'] = "text DEFAULT '' NOT NULL";
-	$tables['spip_auteurs']['field']['adresse_bp'] = "tinytext DEFAULT '' NOT NULL";
+	$tables['spip_auteurs']['field']['adresse'] = "text DEFAULT '' NOT NULL";
 	$tables['spip_auteurs']['field']['adresse_cp'] = "tinytext DEFAULT '' NOT NULL";
 	$tables['spip_auteurs']['field']['adresse_ville'] = "tinytext DEFAULT '' NOT NULL";
 	$tables['spip_auteurs']['field']['adresse_pays'] = "tinytext DEFAULT '' NOT NULL";
@@ -37,9 +35,7 @@ function profils_declarer_tables_objets_sql($tables){
 	$tables['spip_auteurs']['champs_editables'][] = 'name';
 	$tables['spip_auteurs']['champs_editables'][] = 'prenom';
 	$tables['spip_auteurs']['champs_editables'][] = 'societe';
-	$tables['spip_auteurs']['champs_editables'][] = 'adresse_1';
-	$tables['spip_auteurs']['champs_editables'][] = 'adresse_2';
-	$tables['spip_auteurs']['champs_editables'][] = 'adresse_bp';
+	$tables['spip_auteurs']['champs_editables'][] = 'adresse';
 	$tables['spip_auteurs']['champs_editables'][] = 'adresse_cp';
 	$tables['spip_auteurs']['champs_editables'][] = 'adresse_ville';
 	$tables['spip_auteurs']['champs_editables'][] = 'adresse_pays';
@@ -67,10 +63,48 @@ function profils_upgrade($nom_meta_base_version,$version_cible){
 		array('profils_importer_vieilles_souscriptions'),
 	);
 
+	$maj['0.4.0'] = array(
+		// ajouter le champ adresse
+		array('maj_tables',array('spip_auteurs')),
+		array('profils_migrer_adresse'),
+		array('sql_alter','table spip_auteurs drop adresse_1'),
+		array('sql_alter','table spip_auteurs drop adresse_2'),
+		array('sql_alter','table spip_auteurs drop adresse_bp'),
+	);
 
 	// lancer la maj
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
+}
+
+function profils_migrer_adresse(){
+	$res = sql_select("*","spip_auteurs","adresse_1<>'' OR adresse_2<>'' OR adresse_bp<>''");
+	while($row = sql_fetch($res)){
+
+		if (!isset($row['adresse'])){
+			die('Champ adresse pas cree sur table auteurs');
+		}
+
+		$set = array();
+		$adresse = array($row['adresse_1'],$row['adresse_2'],$row['adresse_bp']);
+		$adresse = array_filter($adresse);
+		$adresse = trim(implode("\n",$adresse));
+
+		$set = array(
+			'adresse' => $adresse,
+			'adresse_1' => '',
+			'adresse_2' => '',
+			'adresse_bp' => '',
+		);
+		sql_updateq("spip_auteurs",$set,'id_auteur='.intval($row['id_auteur']));
+		#var_dump($set);
+		#var_dump($row);
+
+
+		#var_dump($id_auteur);
+		if (time()>_TIME_OUT)
+			return;
+	}
 }
 
 

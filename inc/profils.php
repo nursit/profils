@@ -36,6 +36,7 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 		'login' => $champs['courriel'],
 		'name' => $champs['nom'],
 		'prenom' => $champs['prenom'],
+		'adresse' => $champs['adresse'],
 		'adresse_cp' => $champs['code_postal'],
 		'adresse_ville' => $champs['ville'],
 		'adresse_pays' => $champs['pays'],
@@ -43,15 +44,6 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 		'statut' => '6forum',
 		'pass' => $pass,
 	);
-
-	$adresse = explode("\n",$champs['adresse']);
-	$adresse = array_filter($adresse);
-	if (count($adresse))
-		$set['adresse_1'] = array_shift($adresse);
-	if (count($adresse))
-		$set['adresse_2'] = array_shift($adresse);
-	if (count($adresse))
-		$set['adresse_bp'] = implode(' ',$adresse);
 
 	if (!$set['prenom'] AND !$set['name']){
 		$nom = explode('@',$set['email']);

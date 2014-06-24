@@ -116,3 +116,40 @@ function profils_pre_edition($flux){
 	}
 	return $flux;
 }
+
+/**
+ * Creation du profil a la volee lors de l'inscription a la newsletter
+ * @param $flux
+ * @return mixed
+ */
+function profils_post_edition($flux){
+
+	if ($flux['args']['table']=='spip_mailsubscribers'
+		AND $id_mailsubscriber = $flux['args']['id_objet']
+		AND $flux['args']['action']=='instituer'
+	  AND isset($flux['data']['statut'])
+		AND $flux['data']['statut']=='valide'
+		AND $flux['args']['statut_ancien']!=='valide'){
+
+		if ($row = sql_fetsel("*","spip_mailsubscribers","id_mailsubscriber=".intval($id_mailsubscriber))){
+			if (!sql_fetsel("*","spip_auteurs","email=".sql_quote($row['email'])." AND statut<>".sql_quote("5poub"))){
+				include_spip("inc/profils");
+				$id_auteur = profils_creer_depuis_mailsubscriber($row);
+			}
+		}
+	}
+
+	return $flux;
+}
+
+
+function profils_bank_traiter_reglement($flux){
+
+	$souscription = sql_fetsel("*","spip_souscriptions",'id_transaction_echeance='.intval($flux['args']['id_transaction']));
+	if ($souscription AND $souscription['type_souscription']=='don'){
+
+		$flux['data'] .= "<br /><br />Vous pouvez retrouver tous vos dons et re&ccedil;us fiscaux dans <a href=\"".generer_url_public("profil")."\">votre espace lecteur</a>.";
+	}
+
+	return $flux;
+}

@@ -95,13 +95,14 @@ function profils_pre_edition($flux){
 			// cet auteur existe deja ?
 			if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email)." AND statut<>".sql_quote("5poub"))){
 				$id_auteur = $row['id_auteur'];
-				//$GLOBALS['message_ok_souscription_'.$id_souscription] = _L('Votre souscription ')
-				$GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_deja_profil',array('email' => $email));
+				// pas de message confusant dans le processus de don
+				//$GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_deja_profil',array('email' => $email));
 			}
 			else {
 				include_spip("inc/profils");
 				if ($id_auteur = profils_creer_depuis_souscription($flux['data'])){
-					$GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_creation_profil',array('email' => $email));
+					// pas de message confusant dans le processus de don, un mail est envoye
+					// $GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_creation_profil',array('email' => $email));
 				}
 			}
 			if ($id_auteur){

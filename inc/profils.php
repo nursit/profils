@@ -23,8 +23,8 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 	// si don unique et pas recu fiscal demande,
 	// on ne cree pas de profil
 	// (eviter le fichage inutile)
-	if ($champs['recu_fiscal']=='off' AND !isset($champs['abo_statut']))
-		return $id_auteur;
+	//if ($champs['recu_fiscal']=='off' AND !isset($champs['abo_statut']))
+	//	return $id_auteur;
 
 	include_spip("action/editer_auteur");
 	include_spip('inc/acces');
@@ -74,7 +74,7 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 			'email' => $set['email'],
 			'pass' => $set['pass'],
 		);
-		$message = recuperer_fond('modeles/mail_creation_profil',$contexte);
+		$message = recuperer_fond('modeles/mail_creation_profil_don',$contexte);
 		include_spip("inc/notifications");
 		notifications_envoyer_mails($set['email'],$message);
 	}

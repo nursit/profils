@@ -72,6 +72,8 @@ function formulaires_editer_profil_verifier_dist($id_auteur){
 }
 
 function formulaires_editer_profil_traiter_dist($id_auteur){
+
+	refuser_traiter_formulaire_ajax();
 	$auteur = sql_fetsel('*','spip_auteurs','id_auteur='.intval($id_auteur));
 
 	// si l'email change

@@ -20,5 +20,5 @@ function action_autounsubscribe_newsletter_dist($email=null){
 
 	// autosubscribe immediat sans double optin
 	$unsubscribe = charger_fonction("unsubscribe","newsletter");
-	$unsubscribe($email);
+	$unsubscribe($email,array('listes'=>array('newsletter')));
 }

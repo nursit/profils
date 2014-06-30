@@ -21,5 +21,5 @@ function action_autosubscribe_newsletter_dist($email=null){
 
 	// autosubscribe immediat sans double optin
 	$subscribe = charger_fonction("subscribe","newsletter");
-	$subscribe($email,array('force'=>true));
+	$subscribe($email,array('force'=>true,'listes'=>array('newsletter')));
 }

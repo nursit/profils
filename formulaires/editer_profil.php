@@ -16,7 +16,8 @@ function formulaires_editer_profil_charger_dist($id_auteur){
 
 
 	$valeurs = array('newsletter' => '');
-	foreach(array('name',
+	foreach(array('nom',
+			'name',
 	              'prenom',
 	              'email',
 	              'societe',
@@ -80,15 +81,16 @@ function formulaires_editer_profil_traiter_dist($id_auteur){
 	if (_request('email')
 	  AND _request('email')!==$auteur['email']){
 
-		// si c'�tait le login, changer aussi le login
+		// si c'�tait le login, changer aussi le login
 		if ($auteur['email']==$auteur['login'])
 			set_request('login',_request('email'));
 
 	}
 
 	include_spip('inc/editer');
-	// renseigner le nom de la table auteurs :
-	set_request('nom',_request('prenom').' '._request('name'));
+	// renseigner le nom de la table auteurs (s'il n'a pas été renseigné)
+    if (!_request('nom'))
+        set_request('nom',_request('prenom').' '._request('name'));
 	$res = formulaires_editer_objet_traiter('auteur',$id_auteur);
 
 	// si l'email change

@@ -124,6 +124,13 @@ function profils_pre_edition($flux){
  */
 function profils_post_edition($flux){
 
+$notifier=true; 
+//ne pas envoyer de notif par exemple lors d'une inscription en masse a une newsletter 
+if (isset($GLOBALS['notification_instituermailsubscriber_status']) AND !$GLOBALS['notification_instituermailsubscriber_status'])
+       $notifier = false;
+
+
+
 	if ($flux['args']['table']=='spip_mailsubscribers'
 		AND $id_mailsubscriber = $flux['args']['id_objet']
 		AND $flux['args']['action']=='instituer'
@@ -134,7 +141,7 @@ function profils_post_edition($flux){
 		if ($row = sql_fetsel("*","spip_mailsubscribers","id_mailsubscriber=".intval($id_mailsubscriber))){
 			if (!sql_fetsel("*","spip_auteurs","email=".sql_quote($row['email'])." AND statut<>".sql_quote("5poub"))){
 				include_spip("inc/profils");
-				$id_auteur = profils_creer_depuis_mailsubscriber($row);
+				$id_auteur = profils_creer_depuis_mailsubscriber($row,$notifier);
 			}
 		}
 	}

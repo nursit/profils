@@ -69,6 +69,21 @@ function formulaires_editer_profil_verifier_dist($id_auteur){
 		}
 	}
 
+    /* 15/09/2014  Pour le pseudo, on veut bien qu'au cas où le compte auteur existe, et
+        des articles y sont associés, que la modification du pseudo dans
+        l'espace lecteur soit interdite. */
+
+    $nb_articles = sql_countsel('spip_auteurs_liens', 'id_auteur=' . intval($id_auteur) . " and objet='article'");
+    if ($nb_articles > 0) {
+        $nom_auteur = sql_fetsel('nom', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
+        if (_request('nom')
+            AND _request('nom') !== $nom_auteur
+        ) {
+            $erreurs['nom'] = _T('editer_profil:erreur_impossible_modifier_pseudo_auteur');
+        }
+
+    }
+    
 	return $erreurs;
 }
 

@@ -1,0 +1,42 @@
+[(#REM)
+
+Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_html
+
+
+]
+<title>[[(#NOM_SITE_SPIP|textebrut)]] Accès à votre espace Abonné</title>
+<body>
+	<div class="header">
+		<h2>Accès à votre espace Abonné</h2>
+
+		<hr/>
+	</div>
+
+	<p><:form_forum_bonjour{nom=#ENV{nom}}:></p>
+
+	<p>Vous vous êtes abonné en soutien à #NOM_SITE_SPIP. Vous bénéficiez d'un accès à votre espace abonné.
+	<br />Il vous permet de :</p>
+	<ul>
+		<li>gérer votre abonnement&nbsp;;</li>
+		<li>gérer vos inscriptions à la newsletter&nbsp;;</li>
+		<li>modifier votre adresse courriel et vos coordonnées.</li>
+	</ul>
+
+	<p>Pour accéder à cet espace, il vous suffit de cliquer sur le lien suivant, et de saisir le mot de passe que voici&nbsp;:
+	[<b>(#ENV{pass,pass})</b>] (votre login est votre adresse courriel) :</p>
+	[<center>(#INCLURE{fond=emails/inc-button,url=[(#URL_PAGE{profil}|url_absolue)],label=<:bouton_acces_espace_abonne:>,width=250px})</center><br>]
+
+	<p>Pensez à archiver ce message.</p>
+	<p>Nous vous remercions</p>
+	<p>La rédaction de <a href="#URL_SITE_SPIP">#NOM_SITE_SPIP</a></p>
+
+	<div class="footer">
+		<hr/>
+		<p>
+		<:form_forum_login:>[ (#ENV{email,email})]<br />
+		<:form_forum_pass:>[ (#ENV{pass,pass})]
+		</p>
+	</div>
+
+</body>
+#FILTRE{facteur_email_wrap_to_html}

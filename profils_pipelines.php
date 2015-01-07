@@ -100,13 +100,13 @@ function profils_pre_edition($flux){
 			// cet auteur existe deja ?
 			if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email)." AND statut<>".sql_quote("5poub"))){
 				$id_auteur = $row['id_auteur'];
-				// pas de message confusant dans le processus de don
+				// pas de message confusant dans le processus de souscription
 				//$GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_deja_profil',array('email' => $email));
 			}
 			else {
 				include_spip("inc/profils");
 				if ($id_auteur = profils_creer_depuis_souscription($flux['data'])){
-					// pas de message confusant dans le processus de don, un mail est envoye
+					// pas de message confusant dans le processus de souscription, un mail est envoye en tache de fond
 					// $GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_creation_profil',array('email' => $email));
 				}
 			}
@@ -129,11 +129,10 @@ function profils_pre_edition($flux){
  */
 function profils_post_edition($flux){
 
-$notifier=true; 
-//ne pas envoyer de notif par exemple lors d'une inscription en masse a une newsletter 
-if (isset($GLOBALS['notification_instituermailsubscriber_status']) AND !$GLOBALS['notification_instituermailsubscriber_status'])
-       $notifier = false;
-
+	$notifier=true;
+	//ne pas envoyer de notif par exemple lors d'une inscription en masse a une newsletter
+	if (isset($GLOBALS['notification_instituermailsubscriber_status']) AND !$GLOBALS['notification_instituermailsubscriber_status'])
+		$notifier = false;
 
 
 	if ($flux['args']['table']=='spip_mailsubscribers'

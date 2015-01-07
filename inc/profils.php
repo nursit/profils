@@ -82,13 +82,14 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 	$id_auteur = $row['id_auteur'];
 
 	if ($notifier){
+		$type = (isset($champs['type_souscription'])?$champs['type_souscription']:'don');
 		// envoyer l'email avec login/pass
 		$contexte = array(
 			'nom' => $row['prenom']?$row['prenom']:$row['nom'],
 			'email' => $row['email'],
 			'pass' => $row['pass'],
 		);
-		$message = recuperer_fond('modeles/mail_creation_profil_don',$contexte);
+		$message = recuperer_fond('modeles/mail_creation_profil_'.$type,$contexte);
 		include_spip("inc/notifications");
 		notifications_envoyer_mails($row['email'],$message);
 	}

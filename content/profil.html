@@ -87,8 +87,8 @@ jQuery(function(){
 	</header>
 	<div class="main">
 		<div class="texte">
-			<p>Cet espace abonné vous permet de g&eacute;rer votre compte, vos inscriptions newsletter, et votre abonnement.
-				<a class="btn btn-danger btn-small right popin" href="[(#URL_PAGE{identifiants}|parametre_url{retour,#ENV{retour}})]">Je n'ai pas encore de compte</a>
+			<p><:profils:explication_compte:>
+				<a class="btn btn-small right popin" href="[(#URL_PAGE{identifiants}|parametre_url{retour,#ENV{retour}})]"><:profils:bouton_pas_de_compte:></a>
 			</p>
 		</div>
 		[(#FORMULAIRE_LOGIN{#ENV{retour}})]

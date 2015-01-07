@@ -7,7 +7,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_1_visiteur' => '1 profil',
 	'info_aucun_visiteur' => 'Aucun profil',
 	'info_nb_visiteurs' => '@nb@ profils',
-	'info_visiteurs' => 'profils',
+	'info_visiteurs' => 'Profils',
 
 );
 

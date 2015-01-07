@@ -68,6 +68,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'votre_commentaire_minus' => 'Votre commentaire',
 	'vos_nb_commentaires_minus' => 'Vos @nb@ commentaires',
 
+	'bouton_pas_de_compte' => 'Je n\'ai pas encore de compte',
+	'bouton_deja_un_compte' => 'J\'ai déjà un compte',
+	'explication_compte' => 'Cet espace vous permet de gérer votre compte, vos inscriptions newsletter, et votre abonnement.',
+
 );
 
 /*

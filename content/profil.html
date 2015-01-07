@@ -1,0 +1,97 @@
+#CACHE{5}
+#SET{id_auteur,#AUTORISER{webmestre}|?{#ENV{id_auteur,#SESSION{id_auteur}},#SESSION{id_auteur}}}
+<BOUCLE_auteur(AUTEURS){tous}{id_auteur=#GET{id_auteur}}>
+<section class="profil">
+    <header class="cartouche">
+		    <a href="#URL_LOGOUT" class="right btn btn-mini btn-inverse"><i class="icon-off icon-white"></i> <:profils:bouton_deconnexion:></a>
+        <h1><:profils:titre_page_profil:> <small>#NOM</small></h1>
+    </header>
+
+    <div class="main">
+
+	    <div class="section_profil profil clearfix">
+	    	<h2><span><:profils:titre_profil:></span></h2>
+	    	<p><:profils:explications_profil:></p>
+	    	<div class="profil_show[(#ENV{modif,''}|oui)hide]">
+	    		<p>
+	    			[<i class="icon-envelope"></i> (#EMAIL)<br />]
+						[Nom/Pseudo : <strong>(#NOM)</strong><br />]
+						[<strong>(#PRENOM|concat{' ',#NAME}|trim)</strong><br />]
+						[(#SOCIETE)<br />]
+	    			[(#ADRESSE|nl2br)<br />]
+	    			[(#ADRESSE_CP|concat{' ',#ADRESSE_VILLE}|trim)<br />]
+	    			[(#ADRESSE_PAYS)<br />]
+	    			[<i>Tel&nbsp;:</i> (#TEL_FIXE)<br />]
+	    			[<i>Tel&nbsp;:</i> (#TEL_MOBILE)<br />]
+	    		</p>
+	    	  <a class="btn btn-small modifier right" href="[(#SELF|parametre_url{modif,oui})]"><i class="icon-pencil"></i> <:profils:bouton_modifier_profil:></a>
+	    	</div>
+	    	<div class="profil_modif[(#ENV{modif,''}|non)hide]">
+	    		<a class="btn btn-small fermer right" href="[(#SELF|parametre_url{modif,''})]"><i class=" icon-remove-sign"></i> <:profils:bouton_fermer:></a>
+	    		<p class="small"><:profils:explication_privacy_info_perso:></p>
+	    		<div class="ajax">
+	    			#FORMULAIRE_EDITER_PROFIL{#ID_AUTEUR}
+	    		</div>
+	    		<h2><span><:profils:titre_mot_de_passe:></span></h2>
+	    		<p><:profils:explications_mot_de_passe:></p>
+	    		<div class="ajax">
+	    			#FORMULAIRE_MOT_DE_PASSE{#ID_AUTEUR}
+	    		</div>
+	    	</div>
+	    </div>
+
+
+	    <div class="section_profil newsletter clearfix">
+	      <h2><span><:profils:titre_newsletter:></span></h2>
+
+		    <?php if(profils_verifier_statut_newsletter('[(#EMAIL|texte_script)]')) { ?>
+		    [(#BOUTON_ACTION{<:profils:bouton_newsletter_unsubscribe:>,#URL_ACTION_AUTEUR{autounsubscribe_newsletter,#EMAIL,#SELF},'btn-small btn-inverse right'})]
+		    <?php } else { ?>
+		    [(#BOUTON_ACTION{<:profils:bouton_newsletter_subscribe:>,#URL_ACTION_AUTEUR{autosubscribe_newsletter,#EMAIL,#SELF},'btn-small btn-danger right'})]
+		    <?php } ?>
+	      <p><:profils:explications_newsletter:></p>
+	      <div class="ajax">
+	          <INCLURE{fond=liste/newsletters,statut=publie,id_auteur,env} />
+	      </div>
+				<h3><:profils:titre_inviter_ami_newsletter:></h3>
+				<p><:profils:explications_inviter_ami_newsletter{nom_site=#NOM_SITE_SPIP}:></p>
+		    <a href="[(#SELF|parametre_url{invite,oui})]" class="btn btn-small inviter right[(#ENV{invite,''}|oui)hide]">Inviter</a>
+		    <div class="newsletter_invite[(#ENV{invite,''}|non)hide]">
+					<div class="ajax">
+					   #FORMULAIRE_NEWSLETTER_INVITE
+					</div>
+		    </div>
+	    </div>
+
+	    [<div class="section_profil commentaires clearfix">
+	      <h2><span><:profils:titre_commentaire:></span></h2>
+	      <p><:profils:explications_commentaire:></p>
+	      (#INCLURE{fond=liste/commentaires_auteur,id_auteur,env,ajax})
+	    </div>]
+
+    </div>
+
+
+</section>
+<script type="text/javascript">
+jQuery(function(){
+	jQuery('.btn.modifier').click(function(){jQuery('.profil_show').hide('fast');jQuery('.profil_modif').show('fast');return false;})
+	jQuery('.btn.fermer').click(function(){jQuery('.profil_show').show('fast');jQuery('.profil_modif').hide('fast');return false;})
+	jQuery('.btn.inviter').click(function(){jQuery('.newsletter_invite').show('fast');jQuery('.btn.inviter').hide('fast');return false;})
+})
+</script>
+</BOUCLE_auteur>
+<section class="profil">
+	<header class="cartouche">
+    <h1><:profils:titre_page_profil_connexion:> <small>#NOM</small></h1>
+	</header>
+	<div class="main">
+		<div class="texte">
+			<p>Cet espace abonné vous permet de g&eacute;rer votre compte, vos inscriptions newsletter, et votre abonnement.
+				<a class="btn btn-danger btn-small right popin" href="[(#URL_PAGE{identifiants}|parametre_url{retour,#ENV{retour}})]">Je n'ai pas encore de compte</a>
+			</p>
+		</div>
+		[(#FORMULAIRE_LOGIN{#ENV{retour}})]
+	</div>
+</section>
+<//B_auteur>

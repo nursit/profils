@@ -1,0 +1,13 @@
+<B_liste_newsletters>
+    <div class="liste short newsletters">
+        <ul class="liste-items short">
+            <BOUCLE_liste_newsletters(NEWSLETTERS){id_mot?}{where?}{statut!=prog}{statut?}{recherche?}{!par id_newsletter}{0,4}>
+	            <li class="item[ (#COMPTEUR_BOUCLE|alterner{'odd','even'})]">
+		            <i class="icon-envelope"></i>[
+	              (#DATE|affdate_jourcourt) : ][
+	              <a href="(#ID_NEWSLETTER|generer_url_entite{newsletter})]" title="<:info_numero_abbreviation|attribut_html:> #ID_NEWSLETTER">#TITRE</a>
+	            </li>
+            </BOUCLE_liste_newsletters>
+        </ul>
+    </div>
+</B_liste_newsletters>

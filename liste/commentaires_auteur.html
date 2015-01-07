@@ -1,0 +1,23 @@
+<B_comment>
+    <div class="liste short comments">
+        #ANCRE_PAGINATION
+            <ul class="liste-items short">
+                <li class="item-header">[(#GRAND_TOTAL|singulier_ou_pluriel{profils:votre_commentaire_minus,profils:vos_nb_commentaires_minus})]</li>
+                <BOUCLE_comment(FORUMS){id_auteur}{!par date}{pagination #ENV{nb,5}}{tout}>
+                    <li class="item[ (#COMPTEUR_BOUCLE|alterner{'odd','even'})]">
+                      <p class="comment-meta">
+                      [<abbr class="dtreviewed"[ title="(#DATE|date_iso)"]><:comments:date_jour_le:> (#DATE|affdate_jourcourt)</abbr>]
+                        <span class="sep"> sur </span>
+                        <a href="#URL_FORUM">
+	                        <BOUCLE_nouveau(FORUMS){id_objet}{objet}{date>#DATE}{tout} />[(#TOTAL_BOUCLE|oui)<abbr class="newcomments right" title="[(#TOTAL_BOUCLE|singulier_ou_pluriel{profils:info_1_nouveau_commentaire,profils:info_nb_nouveaux_commentaires}|attribut_html)]">+#TOTAL_BOUCLE <i class="icon-comment icon-white"></i></abbr>]<//B_nouveau>
+	                        [(#TITRE|couper{60})]</a>
+                      </p>
+                      <div class="comment-content description">
+                        [<div class="comment-texte"><i class="icon-comment"></i> (#TEXTE|couper{250})</div>]
+                      </div>
+                    </li>
+                </BOUCLE_comment>
+             </ul>
+        [<div class="pagination">(#PAGINATION{page})</div>]
+    </div>
+</B_comment>

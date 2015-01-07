@@ -32,8 +32,10 @@ function profils_formulaire_fond($flux){
  * @return array
  */
 function profils_formulaire_charger($flux){
+	if (!isset($GLOBALS['souscription_forms']))
+		$GLOBALS['souscription_forms'] = array('souscription');
 
-	if ($flux['args']['form']=='souscription'
+	if (in_array($flux['args']['form'],$GLOBALS['souscription_forms'])
 		AND !test_espace_prive()
 	  AND isset($GLOBALS['visiteur_session']['id_auteur'])
 	  AND $GLOBALS['visiteur_session']['id_auteur']){
@@ -66,7 +68,10 @@ function profils_formulaire_charger($flux){
  * @return mixed
  */
 function profils_formulaire_traiter($flux){
-	if ($flux['args']['form']=='souscription'
+	if (!isset($GLOBALS['souscription_forms']))
+		$GLOBALS['souscription_forms'] = array('souscription');
+
+	if (in_array($flux['args']['form'],$GLOBALS['souscription_forms'])
 		AND $id_souscription = $flux['data']['id_souscription']
 		AND isset($GLOBALS['message_ok_souscription_'.$id_souscription])){
 		$flux['data']['message_ok'] .= "<br />" . $GLOBALS['message_ok_souscription_'.$id_souscription];

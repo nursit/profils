@@ -3,6 +3,13 @@
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 
 $GLOBALS[$GLOBALS['idx_lang']] = array(
+
+	'cfg_titre_parametrages' => 'Configuration',
+	'legend_creation_automatique_profil' => 'Création automatique des profils',
+	'label_creer_depuis_mailsubscriber_oui' => 'Création automatique lors d\'une inscription à l\'Infolettre',
+	'label_creer_depuis_souscription_adhesion_oui' => 'Création automatique lors d\'une Ahésion',
+	'label_creer_depuis_souscription_don_oui' => 'Création automatique lors d\'un Don',
+
 	'bouton_creer_compte' => 'Créer mon compte',
 	// L
 	'label_auteur_coordonnees' => "Coordonnées",
@@ -31,6 +38,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	'message_souscription_info_creation_profil' => 'Un compte vous a été créé automatiquement. Vous allez recevoir à l\'adresse @email@ les informations pour y accèder.',
 	'message_souscription_info_deja_profil' => 'Cette souscription a été associée à votre compte déjà existant.',
+
+	'message_confirmation_paiement_don' => '<br /><br />Vous pouvez retrouver tous vos dons et re&ccedil;us fiscaux dans <a href="@url@">votre espace lecteur</a>.',
+	'message_confirmation_paiement_adhesion' => '<br /><br />Vous pouvez retrouver les informations concernant votre adhésion dans <a href="@url@">votre espace adhérent</a>.',
 
 );
 

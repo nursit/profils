@@ -56,11 +56,6 @@ function profils_upgrade($nom_meta_base_version,$version_cible){
 	// creation initiale
 	$maj['create'] = array(
 		array('maj_tables',array('spip_auteurs')),
-		array('profils_importer_vieilles_souscriptions'),
-	);
-
-	$maj['0.3.0'] = array(
-		array('profils_importer_vieilles_souscriptions'),
 	);
 
 	$maj['0.4.0'] = array(

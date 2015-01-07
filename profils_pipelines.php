@@ -104,10 +104,22 @@ function profils_pre_edition($flux){
 				//$GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_deja_profil',array('email' => $email));
 			}
 			else {
-				include_spip("inc/profils");
-				if ($id_auteur = profils_creer_depuis_souscription($flux['data'])){
-					// pas de message confusant dans le processus de souscription, un mail est envoye en tache de fond
-					// $GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_creation_profil',array('email' => $email));
+				// don ou adhesion ?
+				if (isset($flux['data']['type_souscription']))
+					$type = $flux['data']['type_souscription'];
+				else
+					$type = sql_getfetsel("type_souscription","spip_souscriptions","id_souscription=".intval($id_souscription));
+
+				include_spip("inc/config");
+				if (
+				     ($type=="don" AND lire_config("profils/creer_depuis_souscription_don","non")=='oui')
+				  OR ($type=="adhesion" AND lire_config("profils/creer_depuis_souscription_adhesion","oui")=='oui') ) {
+
+					include_spip("inc/profils");
+					if ($id_auteur = profils_creer_depuis_souscription($flux['data'])){
+						// pas de message confusant dans le processus de souscription, un mail est envoye en tache de fond
+						// $GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_creation_profil',array('email' => $email));
+					}
 				}
 			}
 			if ($id_auteur){
@@ -142,12 +154,16 @@ function profils_post_edition($flux){
 		AND $flux['data']['statut']=='valide'
 		AND $flux['args']['statut_ancien']!=='valide'){
 
-		if ($row = sql_fetsel("*","spip_mailsubscribers","id_mailsubscriber=".intval($id_mailsubscriber))){
-			if (!sql_fetsel("*","spip_auteurs","email=".sql_quote($row['email'])." AND statut<>".sql_quote("5poub"))){
-				include_spip("inc/profils");
-				$id_auteur = profils_creer_depuis_mailsubscriber($row,$notifier);
+		include_spip("inc/config");
+		if (lire_config("profils/creer_depuis_mailsubscriber","non")=='oui'){
+			if ($row = sql_fetsel("*","spip_mailsubscribers","id_mailsubscriber=".intval($id_mailsubscriber))){
+				if (!sql_fetsel("*","spip_auteurs","email=".sql_quote($row['email'])." AND statut<>".sql_quote("5poub"))){
+					include_spip("inc/profils");
+					$id_auteur = profils_creer_depuis_mailsubscriber($row,$notifier);
+				}
 			}
 		}
+
 	}
 
 	return $flux;
@@ -157,9 +173,19 @@ function profils_post_edition($flux){
 function profils_bank_traiter_reglement($flux){
 
 	$souscription = sql_fetsel("*","spip_souscriptions",'id_transaction_echeance='.intval($flux['args']['id_transaction']));
-	if ($souscription AND $souscription['type_souscription']=='don'){
+	include_spip("inc/config");
+	if ($souscription
+		AND $souscription['type_souscription']=='don'
+		AND lire_config("profils/creer_depuis_souscription_don","non")=='oui'
+	  AND $souscription['id_auteur']){
+		$flux['data'] .= _T('profils:message_confirmation_paiement_don',array('url'=>generer_url_public("profil")));
+	}
 
-		$flux['data'] .= "<br /><br />Vous pouvez retrouver tous vos dons et re&ccedil;us fiscaux dans <a href=\"".generer_url_public("profil")."\">votre espace lecteur</a>.";
+	if ($souscription
+		AND $souscription['type_souscription']=='adhesion'
+		AND lire_config("profils/creer_depuis_souscription_adhesion","oui")=='oui'
+	  AND $souscription['id_auteur']){
+		$flux['data'] .= _T('profils:message_confirmation_paiement_adhesion',array('url'=>generer_url_public("profil")));
 	}
 
 	return $flux;

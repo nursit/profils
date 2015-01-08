@@ -89,14 +89,29 @@ function profils_pre_edition($flux){
 		AND $id_souscription = $flux['args']['id_objet']
 	  AND isset($flux['data']['courriel'])
 	  AND $email = $flux['data']['courriel']){
+		$cadeau = false;
 		$id_auteur = 0;
+
 		if (isset($flux['data']['id_auteur']) AND $flux['data']['id_auteur'])
 			$id_auteur = $flux['data']['id_auteur'];
+
+		$souscription = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($id_souscription));
 		if (!$id_auteur)
-			$id_auteur = sql_getfetsel("id_auteur","spip_souscriptions","id_souscription=".intval($id_souscription));
+			$id_auteur = $souscription['id_auteur'];
+
+		// attention si c'est un cadeau prendre l'email du destinataire du cadeau
+		// et l'auteur eventuellement deja cree pour lui
+		if (!$id_auteur
+		  AND ($cadeau = $flux['data']['cadeau'] OR $cadeau = $souscription['cadeau'])
+		  AND $cadeau = unserialize($cadeau)){
+			$email = $cadeau['courriel'];
+			$id_auteur = (isset($cadeau['id_auteur'])?$cadeau['id_auteur']:0);
+		}
+
 
 		// si pas d'id_auteur deja connu pour la souscription
 		if (!$id_auteur){
+
 			// cet auteur existe deja ?
 			if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email)." AND statut<>".sql_quote("5poub"))){
 				$id_auteur = $row['id_auteur'];
@@ -116,6 +131,8 @@ function profils_pre_edition($flux){
 				  OR ($type=="adhesion" AND lire_config("profils/creer_depuis_souscription_adhesion","oui")=='oui') ) {
 
 					include_spip("inc/profils");
+					if ($cadeau AND !isset($flux['data']['cadeau']))
+						$flux['data']['cadeau'] = serialize($cadeau);
 					if ($id_auteur = profils_creer_depuis_souscription($flux['data'])){
 						// pas de message confusant dans le processus de souscription, un mail est envoye en tache de fond
 						// $GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_creation_profil',array('email' => $email));
@@ -123,7 +140,13 @@ function profils_pre_edition($flux){
 				}
 			}
 			if ($id_auteur){
-				$flux['data']['id_auteur'] = $id_auteur;
+				if ($cadeau){
+					$cadeau['id_auteur'] = $id_auteur;
+					$flux['data']['cadeau'] = serialize($cadeau);
+				}
+				else {
+					$flux['data']['id_auteur'] = $id_auteur;
+				}
 				// doit on le loger ? oui si pas d'historique de souscription (a confirmer)
 				if (!sql_countsel("spip_souscriptions","id_auteur=".intval($id_auteur)." AND id_souscription<>".intval($id_souscription))){
 					// TODO : loger l'auteur ?

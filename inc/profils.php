@@ -52,23 +52,30 @@ function profils_creer_auteur($set){
 function profils_creer_depuis_souscription($champs, $notifier=true){
 	$id_auteur = 0;
 
-	// si don unique et pas recu fiscal demande,
-	// on ne cree pas de profil
-	// (eviter le fichage inutile)
-	//if ($champs['recu_fiscal']=='off' AND !isset($champs['abo_statut']))
-	//	return $id_auteur;
+	if (isset($champs['cadeau'])
+		AND $champs['cadeau']
+	  AND $cadeaux = unserialize($champs['cadeau'])){
+		$set = array(
+			'email' => $cadeaux['courriel'],
+			'login' => $cadeaux['courriel'],
+			'name' => $cadeaux['nom'],
+			'prenom' => $cadeaux['prenom'],
+		);
+	}
+	else {
+		$set = array(
+			'email' => $champs['courriel'],
+			'login' => $champs['courriel'],
+			'name' => $champs['nom'],
+			'prenom' => $champs['prenom'],
+			'adresse' => $champs['adresse'],
+			'adresse_cp' => $champs['code_postal'],
+			'adresse_ville' => $champs['ville'],
+			'adresse_pays' => $champs['pays'],
+			'tel_fixe' => $champs['telephone'],
+		);
+	}
 
-	$set = array(
-		'email' => $champs['courriel'],
-		'login' => $champs['courriel'],
-		'name' => $champs['nom'],
-		'prenom' => $champs['prenom'],
-		'adresse' => $champs['adresse'],
-		'adresse_cp' => $champs['code_postal'],
-		'adresse_ville' => $champs['ville'],
-		'adresse_pays' => $champs['pays'],
-		'tel_fixe' => $champs['telephone'],
-	);
 
 	if (!$set['prenom'] AND !$set['name']){
 		$nom = explode('@',$set['email']);
@@ -93,7 +100,6 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 		include_spip("inc/notifications");
 		notifications_envoyer_mails($row['email'],$message);
 	}
-
 
 	// rattraper les anciennes souscriptions avec cet email et id_auteur=0
 	// (historique, ou dons uniques sans recu fiscal demande)

@@ -202,14 +202,16 @@ function profils_bank_traiter_reglement($flux){
 	if ($souscription
 		AND $souscription['type_souscription']=='don'
 		AND lire_config("profils/creer_depuis_souscription_don","non")=='oui'
-	  AND $souscription['id_auteur']){
+	  AND $souscription['id_auteur']
+	  AND !(isset($souscription['cadeau']) AND $souscription['cadeau'])){
 		$flux['data'] .= _T('profils:message_confirmation_paiement_don',array('url'=>generer_url_public("profil")));
 	}
 
 	if ($souscription
 		AND $souscription['type_souscription']=='adhesion'
 		AND lire_config("profils/creer_depuis_souscription_adhesion","oui")=='oui'
-	  AND $souscription['id_auteur']){
+	  AND $souscription['id_auteur']
+		AND !(isset($souscription['cadeau']) AND $souscription['cadeau'])){
 		$flux['data'] .= _T('profils:message_confirmation_paiement_adhesion',array('url'=>generer_url_public("profil")));
 	}
 

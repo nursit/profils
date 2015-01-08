@@ -54,12 +54,12 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 
 	if (isset($champs['cadeau'])
 		AND $champs['cadeau']
-	  AND $cadeaux = unserialize($champs['cadeau'])){
+	  AND $cadeau = unserialize($champs['cadeau'])){
 		$set = array(
-			'email' => $cadeaux['courriel'],
-			'login' => $cadeaux['courriel'],
-			'name' => $cadeaux['nom'],
-			'prenom' => $cadeaux['prenom'],
+			'email' => $cadeau['courriel'],
+			'login' => $cadeau['courriel'],
+			'name' => $cadeau['nom'],
+			'prenom' => $cadeau['prenom'],
 		);
 	}
 	else {
@@ -95,6 +95,7 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 			'nom' => $row['prenom']?$row['prenom']:$row['nom'],
 			'email' => $row['email'],
 			'pass' => $row['pass'],
+			'cadeau' => (isset($cadeau) AND $cadeau)?' ':'',
 		);
 		$message = recuperer_fond('modeles/mail_creation_profil_'.$type,$contexte);
 		include_spip("inc/notifications");
@@ -103,7 +104,7 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 
 	// rattraper les anciennes souscriptions avec cet email et id_auteur=0
 	// (historique, ou dons uniques sans recu fiscal demande)
-	sql_updateq("spip_souscriptions",array('id_auteur'=>$id_auteur),"id_auteur=0 AND courriel=".sql_quote($champs['courriel']));
+	sql_updateq("spip_souscriptions",array('id_auteur'=>$id_auteur),"id_auteur=0 AND courriel=".sql_quote($row['email']));
 
 	return $id_auteur;
 }

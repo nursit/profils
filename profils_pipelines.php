@@ -89,25 +89,23 @@ function profils_pre_edition($flux){
 		AND $id_souscription = $flux['args']['id_objet']
 	  AND isset($flux['data']['courriel'])
 	  AND $email = $flux['data']['courriel']){
-		$cadeau = false;
+
 		$id_auteur = 0;
-
-		if (isset($flux['data']['id_auteur']) AND $flux['data']['id_auteur'])
-			$id_auteur = $flux['data']['id_auteur'];
-
 		$souscription = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($id_souscription));
-		if (!$id_auteur)
-			$id_auteur = $souscription['id_auteur'];
 
 		// attention si c'est un cadeau prendre l'email du destinataire du cadeau
 		// et l'auteur eventuellement deja cree pour lui
-		if (!$id_auteur
-		  AND ($cadeau = $flux['data']['cadeau'] OR $cadeau = $souscription['cadeau'])
+		if (($cadeau = $flux['data']['cadeau'] OR $cadeau = $souscription['cadeau'])
 		  AND $cadeau = unserialize($cadeau)){
 			$email = $cadeau['courriel'];
 			$id_auteur = (isset($cadeau['id_auteur'])?$cadeau['id_auteur']:0);
 		}
-
+		else {
+			if (isset($flux['data']['id_auteur']) AND $flux['data']['id_auteur'])
+				$id_auteur = $flux['data']['id_auteur'];
+			if (!$id_auteur)
+				$id_auteur = $souscription['id_auteur'];
+		}
 
 		// si pas d'id_auteur deja connu pour la souscription
 		if (!$id_auteur){
@@ -143,13 +141,17 @@ function profils_pre_edition($flux){
 				if ($cadeau){
 					$cadeau['id_auteur'] = $id_auteur;
 					$flux['data']['cadeau'] = serialize($cadeau);
+					// si jamais l'auteur est connu, on lui attribue la souscription, c'est mieux
+					if ($id2 = sql_getfetsel("id_auteur","spip_auteurs","email=".sql_quote($flux['data']['courriel'])." AND statut<>".sql_quote("5poub"))){
+						$flux['data']['id_auteur'] = $id2;
+					}
 				}
 				else {
 					$flux['data']['id_auteur'] = $id_auteur;
-				}
-				// doit on le loger ? oui si pas d'historique de souscription (a confirmer)
-				if (!sql_countsel("spip_souscriptions","id_auteur=".intval($id_auteur)." AND id_souscription<>".intval($id_souscription))){
-					// TODO : loger l'auteur ?
+					// doit on le loger ? oui si pas d'historique de souscription (a confirmer)
+					if (!sql_countsel("spip_souscriptions","id_auteur=".intval($id_auteur)." AND id_souscription<>".intval($id_souscription))){
+						// TODO : loger l'auteur ?
+					}
 				}
 			}
 		}

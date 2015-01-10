@@ -76,6 +76,16 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 		);
 	}
 
+	if (isset($champs['date_souscription'])){
+		$set['date_inscription'] = $champs['date_souscription'];
+	}
+	else {
+		$set['date_inscription'] = date('Y-m-d H:i:s');
+	}
+	if (!isset($GLOBALS['visiteur_session']['id_auteur']) OR !$GLOBALS['visiteur_session']['id_auteur']){
+		$set['ip_inscription'] = $GLOBALS['ip'];
+	}
+
 
 	if (!$set['prenom'] AND !$set['name']){
 		$nom = explode('@',$set['email']);

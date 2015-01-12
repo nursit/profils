@@ -14,7 +14,15 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 
 	<p><:form_forum_bonjour{nom=#ENV{nom}}:></p>
 
-	<p>Vous vous êtes abonné en soutien à #NOM_SITE_SPIP. Vous bénéficiez d'un accès à votre espace abonné.
+	<p>[(#ENV{cadeau}|non)
+		Vous vous êtes abonné en soutien à #NOM_SITE_SPIP et nous vous en remercions.
+		][(#ENV{cadeau}|oui)
+		Surprise ! [(#ENV{cadeau_from/prenom}) ][(#ENV{cadeau_from/nom}) ] vous a abonné à #NOM_SITE_SPIP pour nous soutenir
+		et vous faire en gentil cadeau :)
+		<br />(Vous pouvez le remercier par un mail à son adresse [<a href="mailto:#ENV{cadeau_from/email}">(#ENV{cadeau_from/email})</a>].)
+		]
+	</p>
+	<p>Vous bénéficiez d'un accès à votre espace abonné.
 	<br />Il vous permet de :</p>
 	<ul>
 		<li>gérer votre abonnement&nbsp;;</li>

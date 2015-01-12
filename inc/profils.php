@@ -107,6 +107,13 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 			'pass' => $row['pass'],
 			'cadeau' => (isset($cadeau) AND $cadeau)?' ':'',
 		);
+		if ($contexte['cadeau']){
+			$contexte['cadeau_from'] = array(
+				"nom" => $champs['nom'],
+				"prenom" => $champs['prenom'],
+				"email" => $champs['courriel'],
+			);
+		}
 		$message = recuperer_fond('modeles/mail_creation_profil_'.$type,$contexte);
 		include_spip("inc/notifications");
 		notifications_envoyer_mails($row['email'],$message);

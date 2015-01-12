@@ -114,6 +114,7 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 				"email" => $champs['courriel'],
 			);
 		}
+		$contexte['id_auteur'] = $id_auteur;
 		$message = recuperer_fond('modeles/mail_creation_profil_'.$type,$contexte);
 		include_spip("inc/notifications");
 		notifications_envoyer_mails($row['email'],$message);

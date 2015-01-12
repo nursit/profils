@@ -256,7 +256,8 @@ function profils_bank_traiter_reglement($flux){
 		sql_updateq("spip_souscriptions",$set,"id_souscription=".intval($souscription['id_souscription']));
 		if (!$transaction['id_auteur']){
 			$set = array();
-			$souscription = sql_fetsel("*", "spip_souscriptions", 'id_transaction_echeance=' . intval($flux['args']['id_transaction']));
+			// on recharge
+			$souscription = sql_fetsel("*", "spip_souscriptions", 'id_souscription=' . intval($souscription['id_souscription']));
 			if ($cadeau = $souscription['cadeau']
 			  AND $cadeau = unserialize($cadeau)){
 				if (isset($cadeau['id_auteur'])){

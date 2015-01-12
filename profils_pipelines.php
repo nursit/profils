@@ -85,79 +85,101 @@ function profils_formulaire_traiter($flux){
  * @return mixed
  */
 function profils_pre_edition($flux){
+	/*
 	if ($flux['args']['type']=='souscription'
 		AND $id_souscription = $flux['args']['id_objet']
 	  AND isset($flux['data']['courriel'])
 	  AND $email = $flux['data']['courriel']){
 
-		$id_auteur = 0;
-		$souscription = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($id_souscription));
+		// don ou adhesion ?
+		if (isset($flux['data']['type_souscription']))
+			$type = $flux['data']['type_souscription'];
+		else
+			$type = sql_getfetsel("type_souscription","spip_souscriptions","id_souscription=".intval($id_souscription));
 
-		// attention si c'est un cadeau prendre l'email du destinataire du cadeau
-		// et l'auteur eventuellement deja cree pour lui
-		if (($cadeau = $flux['data']['cadeau'] OR $cadeau = $souscription['cadeau'])
-		  AND $cadeau = unserialize($cadeau)){
-			$email = $cadeau['courriel'];
-			$id_auteur = (isset($cadeau['id_auteur'])?$cadeau['id_auteur']:0);
+		include_spip("inc/config");
+		if (
+		     ($type=="don" AND lire_config("profils/creer_depuis_souscription_don","non")=='oui')
+		  OR ($type=="adhesion" AND lire_config("profils/creer_depuis_souscription_adhesion","oui")=='oui') ){
+
+			if ($message = profils_verifier_auteur_souscription($id_souscription,$flux['data'])){
+				// pas de message confusant dans le processus de souscription
+				//$GLOBALS['message_ok_souscription_'.$id_souscription] = $message;
+			}
+		}
+	}
+	*/
+	return $flux;
+}
+
+/**
+ * Verifier/creer l'auteur d'une souscription
+ * @param $id_souscription
+ * @param $champs
+ * @param bool $notifier
+ * @return mixed|string
+ */
+function profils_verifier_auteur_souscription($id_souscription,&$champs,$notifier = true){
+	$id_auteur = 0;
+	$souscription = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($id_souscription));
+	$message = "";
+	$cadeau = false;
+
+	$souscription_m = array_merge($souscription,$champs);
+	// attention si c'est un cadeau prendre l'email du destinataire du cadeau
+	// et l'auteur eventuellement deja cree pour lui
+	if (isset($souscription_m['cadeau'])
+		AND $cadeau = $souscription_m['cadeau']
+	  AND $cadeau = unserialize($cadeau)){
+		$email = $cadeau['courriel'];
+		$id_auteur = (isset($cadeau['id_auteur'])?$cadeau['id_auteur']:0);
+	}
+	else {
+		$email = $souscription_m['courriel'];
+		if (isset($champs['id_auteur']) AND $champs['id_auteur'])
+			$id_auteur = $champs['id_auteur'];
+		if (!$id_auteur)
+			$id_auteur = $souscription['id_auteur'];
+	}
+
+	// si pas d'id_auteur deja connu pour la souscription
+	if (!$id_auteur AND $email){
+
+		// cet auteur existe deja ?
+		if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email)." AND statut<>".sql_quote("5poub"))){
+			$id_auteur = $row['id_auteur'];
+			$message = _T('profils:message_souscription_info_deja_profil',array('email' => $email));
 		}
 		else {
-			if (isset($flux['data']['id_auteur']) AND $flux['data']['id_auteur'])
-				$id_auteur = $flux['data']['id_auteur'];
-			if (!$id_auteur)
-				$id_auteur = $souscription['id_auteur'];
+			include_spip("inc/profils");
+			if ($cadeau AND !isset($champs['cadeau']))
+				$champs['cadeau'] = serialize($cadeau);
+			if ($id_auteur = profils_creer_depuis_souscription($souscription,$notifier)){
+				$message = _T('profils:message_souscription_info_creation_profil',array('email' => $email));
+			}
 		}
-
-		// si pas d'id_auteur deja connu pour la souscription
-		if (!$id_auteur){
-
-			// cet auteur existe deja ?
-			if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email)." AND statut<>".sql_quote("5poub"))){
-				$id_auteur = $row['id_auteur'];
-				// pas de message confusant dans le processus de souscription
-				//$GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_deja_profil',array('email' => $email));
+		if ($id_auteur){
+			if ($cadeau){
+				$cadeau['id_auteur'] = $id_auteur;
+				$champs['cadeau'] = serialize($cadeau);
+				// si jamais l'auteur est connu, on lui attribue la souscription, c'est mieux
+				if ($id2 = sql_getfetsel("id_auteur","spip_auteurs","email=".sql_quote($champs['courriel'])." AND statut<>".sql_quote("5poub"))){
+					$champs['id_auteur'] = $id2;
+				}
 			}
 			else {
-				// don ou adhesion ?
-				if (isset($flux['data']['type_souscription']))
-					$type = $flux['data']['type_souscription'];
-				else
-					$type = sql_getfetsel("type_souscription","spip_souscriptions","id_souscription=".intval($id_souscription));
-
-				include_spip("inc/config");
-				if (
-				     ($type=="don" AND lire_config("profils/creer_depuis_souscription_don","non")=='oui')
-				  OR ($type=="adhesion" AND lire_config("profils/creer_depuis_souscription_adhesion","oui")=='oui') ) {
-
-					include_spip("inc/profils");
-					if ($cadeau AND !isset($flux['data']['cadeau']))
-						$flux['data']['cadeau'] = serialize($cadeau);
-					if ($id_auteur = profils_creer_depuis_souscription($flux['data'])){
-						// pas de message confusant dans le processus de souscription, un mail est envoye en tache de fond
-						// $GLOBALS['message_ok_souscription_'.$id_souscription] = _T('profils:message_souscription_info_creation_profil',array('email' => $email));
-					}
-				}
-			}
-			if ($id_auteur){
-				if ($cadeau){
-					$cadeau['id_auteur'] = $id_auteur;
-					$flux['data']['cadeau'] = serialize($cadeau);
-					// si jamais l'auteur est connu, on lui attribue la souscription, c'est mieux
-					if ($id2 = sql_getfetsel("id_auteur","spip_auteurs","email=".sql_quote($flux['data']['courriel'])." AND statut<>".sql_quote("5poub"))){
-						$flux['data']['id_auteur'] = $id2;
-					}
-				}
-				else {
-					$flux['data']['id_auteur'] = $id_auteur;
-					// doit on le loger ? oui si pas d'historique de souscription (a confirmer)
-					if (!sql_countsel("spip_souscriptions","id_auteur=".intval($id_auteur)." AND id_souscription<>".intval($id_souscription))){
-						// TODO : loger l'auteur ?
-					}
+				$champs['id_auteur'] = $id_auteur;
+				// doit on le loger ? oui si pas d'historique de souscription (a confirmer)
+				if (!sql_countsel("spip_souscriptions","id_auteur=".intval($id_auteur)." AND id_souscription<>".intval($id_souscription))){
+					// TODO : loger l'auteur ?
 				}
 			}
 		}
 	}
-	return $flux;
+
+	return $message;
 }
+
 
 /**
  * Creation du profil a la volee lors de l'inscription a la newsletter
@@ -197,22 +219,57 @@ function profils_post_edition($flux){
 
 function profils_bank_traiter_reglement($flux){
 
-	$souscription = sql_fetsel("*","spip_souscriptions",'id_transaction_echeance='.intval($flux['args']['id_transaction']));
+	$souscription = sql_fetsel("*", "spip_souscriptions", 'id_transaction_echeance=' . intval($flux['args']['id_transaction']));
+	$transaction = sql_fetsel("*", "spip_transactions", 'id_transaction=' . intval($flux['args']['id_transaction']));
+	$set = array();
 	include_spip("inc/config");
 	if ($souscription
 		AND $souscription['type_souscription']=='don'
-		AND lire_config("profils/creer_depuis_souscription_don","non")=='oui'
-	  AND $souscription['id_auteur']
-	  AND !(isset($souscription['cadeau']) AND $souscription['cadeau'])){
-		$flux['data'] .= _T('profils:message_confirmation_paiement_don',array('url'=>generer_url_public("profil")));
+		AND lire_config("profils/creer_depuis_souscription_don", "non")=='oui'
+	){
+
+		$message = profils_verifier_auteur_souscription($souscription['id_souscription'], $set);
+		$souscription = array_merge($souscription, $set);
+
+		if ($souscription['id_auteur']
+			AND !(isset($souscription['cadeau']) AND $souscription['cadeau']) ){
+			$flux['data'] .= _T('profils:message_confirmation_paiement_don', array('url' => generer_url_public("profil")));
+		}
 	}
 
 	if ($souscription
 		AND $souscription['type_souscription']=='adhesion'
-		AND lire_config("profils/creer_depuis_souscription_adhesion","oui")=='oui'
-	  AND $souscription['id_auteur']
-		AND !(isset($souscription['cadeau']) AND $souscription['cadeau'])){
-		$flux['data'] .= _T('profils:message_confirmation_paiement_adhesion',array('url'=>generer_url_public("profil")));
+		AND lire_config("profils/creer_depuis_souscription_adhesion", "oui")=='oui'
+	){
+
+		$message = profils_verifier_auteur_souscription($souscription['id_souscription'], $set);
+		$souscription = array_merge($souscription, $set);
+
+		if ($souscription['id_auteur']
+			AND !(isset($souscription['cadeau']) AND $souscription['cadeau']) ){
+			$flux['data'] .= _T('profils:message_confirmation_paiement_adhesion', array('url' => generer_url_public("profil")));
+		}
+	}
+
+
+	if (count($set)){
+		sql_updateq("spip_souscriptions",$set,"id_souscription=".intval($souscription['id_souscription']));
+		if (!$transaction['id_auteur']){
+			$set = array();
+			$souscription = sql_fetsel("*", "spip_souscriptions", 'id_transaction_echeance=' . intval($flux['args']['id_transaction']));
+			if ($cadeau = $souscription['cadeau']
+			  AND $cadeau = unserialize($cadeau)){
+				if (isset($cadeau['id_auteur'])){
+					$set['id_auteur'] = $cadeau['id_auteur'];
+				}
+			}
+			elseif($souscription['id_auteur']){
+				$set['id_auteur'] = $souscription['id_auteur'];
+			}
+			if ($set){
+				sql_updateq("spip_transactions",$set,"id_transaction=".intval($flux['args']['id_transaction']));
+			}
+		}
 	}
 
 	return $flux;

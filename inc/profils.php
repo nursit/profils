@@ -124,7 +124,7 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 	sql_updateq("spip_souscriptions",array('id_auteur'=>$id_auteur),"id_auteur=0 AND courriel=".sql_quote($row['email']));
 	// rattraper les anciennes transactions avec cet email et id_auteur=0
 	// (historique, ou dons uniques sans recu fiscal demande)
-	sql_updateq("spip_transactions",array('id_auteur'=>$id_auteur),"id_auteur=0 AND auteur=".sql_quote($row['email']));
+	// sql_updateq("spip_transactions",array('id_auteur'=>$id_auteur),"id_auteur=0 AND auteur=".sql_quote($row['email']));
 
 	return $id_auteur;
 }

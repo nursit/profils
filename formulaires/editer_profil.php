@@ -50,10 +50,11 @@ function formulaires_editer_profil_verifier_dist($id_auteur){
 	$oblis = array('name',
 	              'prenom',
 	              'email',
-	              'adresse',
-	              'adresse_cp',
-	              'adresse_ville',
-	              'adresse_pays');
+	              #'adresse',
+	              #'adresse_cp',
+	              #'adresse_ville',
+	              #'adresse_pays'
+	);
 
 	foreach($oblis as $obli)
 		if (!strlen(_request($obli)))

@@ -5,7 +5,7 @@
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'legend_coordonnees' => "Coordonnées",
 	'legend_newsletter' => "Newsletter",
-	'label_nom' => 'Nom / Pseudo ',
+	'label_nom' => 'Pseudo ',
 	'label_name' => 'Nom',
 	'label_prenom' => 'Prénom',
 	'label_email' => 'E-mail',
@@ -25,7 +25,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'erreur_adresse_cp_obligatoire' => 'Vous devez renseigner votre code postal.',
 	'erreur_adresse_ville_obligatoire' => 'Vous devez renseigner votre ville.',
 	'erreur_email_invalide' => 'Email invalide',
-    'erreur_impossible_modifier_pseudo_auteur' => "Désolé, il n'est pas possible de modifier le nom / pseudo pour un rédacteur du site",
+	'erreur_impossible_modifier_pseudo_auteur' => "Désolé, il n'est pas possible de modifier le nom / pseudo pour un rédacteur du site",
+	'explication_nom' => 'Le nom sous lequel vous apparaîtrez dans les commentaires ou sur votre blog.',
 
 	'message_ok_profil_modifie' => 'Merci, vos informations ont été mises à jour.',
 

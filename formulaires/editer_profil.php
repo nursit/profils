@@ -8,6 +8,7 @@
  */
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+include_spip("base/abstract_sql");
 
 function formulaires_editer_profil_charger_dist($id_auteur){
 	if (!$id_auteur

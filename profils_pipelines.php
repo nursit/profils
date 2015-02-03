@@ -24,6 +24,22 @@ function profils_formulaire_fond($flux){
 	return $flux;
 }
 
+function profils_boite_infos($flux){
+	if ($flux['args']['type']=='auteur'
+	  AND $id_auteur = $flux['args']['id']
+	  AND include_spip('inc/autoriser')
+		AND autoriser('webmestre')){
+
+		// on peut s'autologer a la place d'un visiteur
+		if ($statut = sql_getfetsel("statut","spip_auteurs","id_auteur=".intval($id_auteur)." AND statut=".sql_quote("6forum"))){
+			include_spip('inc/actions');
+			$bouton = bouton_action("Se connecter avec son compte",generer_action_auteur("usurper_profil","$id_auteur",generer_url_public("profil","","",false)));
+			$flux['data'] .= $bouton;
+		}
+	}
+	return $flux;
+}
+
 /**
  * Pre-charger les infos profils (nom, adresse, tel) dans le formulaire souscription
  * si le visiteur est loge

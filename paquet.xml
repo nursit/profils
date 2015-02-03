@@ -20,6 +20,7 @@
 	<pipeline nom="formulaire_traiter" inclure="profils_pipelines.php" />
 	<pipeline nom="pre_edition" inclure="profils_pipelines.php" />
 	<pipeline nom="post_edition" inclure="profils_pipelines.php" />
+	<pipeline nom="boite_infos" inclure="profils_pipelines.php" />
 
 	<necessite nom="saisies" compatibilite="];[" />
 	<necessite nom="pays" compatibilite="];[" />

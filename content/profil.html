@@ -41,28 +41,6 @@
 	    </div>
 
 
-	    <div class="section_profil newsletter clearfix">
-	      <h2><span><:profils:titre_newsletter:></span></h2>
-
-		    <?php if(profils_verifier_statut_newsletter('[(#EMAIL|texte_script)]')) { ?>
-		    [(#BOUTON_ACTION{<:profils:bouton_newsletter_unsubscribe:>,#URL_ACTION_AUTEUR{autounsubscribe_newsletter,#EMAIL,#SELF},'btn-small btn-inverse right'})]
-		    <?php } else { ?>
-		    [(#BOUTON_ACTION{<:profils:bouton_newsletter_subscribe:>,#URL_ACTION_AUTEUR{autosubscribe_newsletter,#EMAIL,#SELF},'btn-small btn-danger right'})]
-		    <?php } ?>
-	      <p><:profils:explications_newsletter:></p>
-	      <div class="ajax">
-	          <INCLURE{fond=liste/newsletters,statut=publie,id_auteur,env} />
-	      </div>
-				<h3><:profils:titre_inviter_ami_newsletter:></h3>
-				<p><:profils:explications_inviter_ami_newsletter{nom_site=#NOM_SITE_SPIP}:></p>
-		    <a href="[(#SELF|parametre_url{invite,oui})]" class="btn btn-small inviter right[(#ENV{invite,''}|oui)hide]">Inviter</a>
-		    <div class="newsletter_invite[(#ENV{invite,''}|non)hide]">
-					<div class="ajax">
-					   #FORMULAIRE_NEWSLETTER_INVITE
-					</div>
-		    </div>
-	    </div>
-
 	    [<div class="section_profil commentaires clearfix">
 	      <h2><span><:profils:titre_commentaire:></span></h2>
 	      <p><:profils:explications_commentaire:></p>

@@ -23,6 +23,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_auteur_tel_fixe' => 'Téléphone fixe',
 	'label_auteur_tel_mobile' => 'Téléphone mobile',
 	'label_partenaire_1' => 'Compte partenaire',
+	'label_avatar' => 'Nouvel avatar',
+	'label_votre_avatar' => 'Votre avatar',
 	'info_partenaire' => 'Compte partenaire',
 	'info_adresse' => 'Adresse :',
 	'info_societe' => 'Société',
@@ -51,6 +53,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_newsletter_subscribe' => 'S\'inscrire à la newsletter',
 
 	'titre_commentaire' => 'Commentaires',
+	'titre_avatar' => 'Avatar',
 	'titre_inviter_ami_newsletter' => 'Inviter un ami à lire la Newsletter',
 	'titre_mot_de_passe' => 'Changement mot de passe',
 	'titre_newsletter' => 'Newsletter',

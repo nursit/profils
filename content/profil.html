@@ -13,6 +13,7 @@
 	    	<h2><span><:profils:titre_profil:></span></h2>
 	    	<p><:profils:explications_profil:></p>
 	    	<div class="profil_show[(#ENV{modif,''}|oui)hide]">
+			    #LOGO_AUTEUR
 	    		<p>
 	    			[<i class="icon-envelope"></i> (#EMAIL)<br />]
 						[Nom/Pseudo : <strong>(#NOM)</strong><br />]
@@ -32,7 +33,11 @@
 	    		<div class="ajax">
 	    			#FORMULAIRE_EDITER_PROFIL{#ID_AUTEUR}
 	    		</div>
-	    		<h2><span><:profils:titre_mot_de_passe:></span></h2>
+			    <h3><span><:profils:titre_avatar:></span></h3>
+	    		<div class="ajax">
+	    			#FORMULAIRE_EDITER_AVATAR{#ID_AUTEUR}
+	    		</div>
+	    		<h3><span><:profils:titre_mot_de_passe:></span></h3>
 	    		<p><:profils:explications_mot_de_passe:></p>
 	    		<div class="ajax">
 	    			#FORMULAIRE_MOT_DE_PASSE{#ID_AUTEUR}

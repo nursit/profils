@@ -1,0 +1,8 @@
+<BOUCLE_aut(AUTEURS){id_auteur}{statut?}>
+[(#NAME)][ (#PRENOM)]
+[<br />(#SOCIETE)]
+[<br />(#ADRESSE|propre|PtoBR)]
+[<br />(#ADRESSE_CP|concat{' ',#ADRESSE_VILLE}|trim)]
+[<br /> (#ADRESSE_PAYS)]
+[<br /> (#EMAIL)]
+</BOUCLE_aut>

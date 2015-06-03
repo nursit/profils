@@ -232,6 +232,21 @@ function profils_post_edition($flux){
 	return $flux;
 }
 
+/**
+ * Reglements en attente ? on cree le profil id_auteur quand meme
+ * @param array $flux
+ * @return array
+ */
+function profils_trig_bank_reglement_en_attente($flux){
+
+	if ($id_transaction=$flux['args']['id_transaction']){
+		$res = profils_bank_traiter_reglement($flux);
+		$message = $res['data'];
+		sql_updateq("spip_transactions",array('message'=>$message),"id_transaction=".intval($id_transaction));
+	}
+
+	return $flux;
+}
 
 function profils_bank_traiter_reglement($flux){
 
@@ -266,7 +281,6 @@ function profils_bank_traiter_reglement($flux){
 			$flux['data'] .= _T('profils:message_confirmation_paiement_adhesion', array('url' => generer_url_public("profil")));
 		}
 	}
-
 
 	if (count($set)){
 		sql_updateq("spip_souscriptions",$set,"id_souscription=".intval($souscription['id_souscription']));

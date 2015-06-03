@@ -1,7 +1,7 @@
 <paquet
 	prefix="profils"
 	categorie="outil"
-	version="0.5.0"
+	version="0.5.1"
 	etat="test"
 	compatibilite="];["
 	logo="prive/themes/spip/images/profil-32.png"
@@ -20,6 +20,7 @@
 	<pipeline nom="formulaire_traiter" inclure="profils_pipelines.php" />
 	<pipeline nom="pre_edition" inclure="profils_pipelines.php" />
 	<pipeline nom="post_edition" inclure="profils_pipelines.php" />
+	<pipeline nom="trig_bank_reglement_en_attente" inclure="profils_pipelines.php" />
 	<pipeline nom="boite_infos" inclure="profils_pipelines.php" />
 
 	<necessite nom="saisies" compatibilite="];[" />

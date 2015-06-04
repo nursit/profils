@@ -9,6 +9,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_creer_depuis_mailsubscriber_oui' => 'Création automatique lors d\'une inscription à l\'Infolettre',
 	'label_creer_depuis_souscription_adhesion_oui' => 'Création automatique lors d\'une Ahésion',
 	'label_creer_depuis_souscription_don_oui' => 'Création automatique lors d\'un Don',
+	'label_creer_sur_paiements_attente_oui' => 'Créer aussi les profils sur les paiements en attente',
 
 	'bouton_creer_compte' => 'Créer mon compte',
 	// L

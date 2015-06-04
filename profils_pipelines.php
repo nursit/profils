@@ -238,8 +238,10 @@ function profils_post_edition($flux){
  * @return array
  */
 function profils_trig_bank_reglement_en_attente($flux){
+	include_spip("inc/config");
 
-	if ($id_transaction=$flux['args']['id_transaction']){
+	if ($id_transaction=$flux['args']['id_transaction']
+	  AND lire_config("profils/creer_sur_paiements_attente", "non")=='oui'){
 		$res = profils_bank_traiter_reglement($flux);
 		$message = $res['data'];
 		sql_updateq("spip_transactions",array('message'=>$message),"id_transaction=".intval($id_transaction));

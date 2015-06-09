@@ -250,7 +250,7 @@ function profils_trig_bank_reglement_en_attente($flux){
 	return $flux;
 }
 
-function profils_bank_traiter_reglement($flux){
+function profils_bank_pre_facturer_reglement($flux){
 
 	$souscription = sql_fetsel("*", "spip_souscriptions", 'id_transaction_echeance=' . intval($flux['args']['id_transaction']));
 	$transaction = sql_fetsel("*", "spip_transactions", 'id_transaction=' . intval($flux['args']['id_transaction']));

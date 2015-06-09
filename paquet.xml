@@ -13,7 +13,7 @@
 
 	<pipeline nom="afficher_fiche_objet" inclure="profils_pipelines.php" />
 	<pipeline nom="afficher_contenu_objet" inclure="profils_pipelines.php" />
-	<pipeline nom="bank_traiter_reglement" inclure="profils_pipelines.php" />
+	<pipeline nom="bank_pre_facturer_reglement" inclure="profils_pipelines.php" />
 	<pipeline nom="declarer_tables_objets_sql" inclure="profils_administrations.php" />
 	<pipeline nom="formulaire_fond" inclure="profils_pipelines.php" />
 	<pipeline nom="formulaire_charger" inclure="profils_pipelines.php" />

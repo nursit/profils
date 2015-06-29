@@ -8,7 +8,7 @@
 	schema="0.4.0"
 >	
 
-	<nom>profils</nom>
+	<nom>Profils</nom>
 	<!-- Comptes profils -->
 
 	<pipeline nom="afficher_fiche_objet" inclure="profils_pipelines.php" />

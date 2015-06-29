@@ -29,7 +29,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'explication_nom' => 'Le nom sous lequel vous apparaîtrez dans les commentaires ou sur votre blog.',
 
 	'message_ok_profil_modifie' => 'Merci, vos informations ont été mises à jour.',
+	'message_ok_adresse_profil_modifie' => 'Merci, votre adresse a été mise à jour.',
 
 );
 
-?>

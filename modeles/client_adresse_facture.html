@@ -3,7 +3,7 @@
 [<br />(#SOCIETE)]
 [<br />(#ADRESSE|propre|PtoBR)]
 [<br />(#ADRESSE_CP|concat{' ',#ADRESSE_VILLE}|trim)]
-[<br />(#ADRESSE_PAYS)]
+<BOUCLE_pays_code(PAYS){code=#ADRESSE_PAYS}><br />#NOM</BOUCLE_pays_code>
 [<br />(#EMAIL)]
 [<br />Code Client : (#ID_AUTEUR)]
 </BOUCLE_aut>

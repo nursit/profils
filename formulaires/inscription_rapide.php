@@ -14,7 +14,8 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param string $retour
  * @return array
  */
-function formulaires_inscription_rapide_charger_dist($statut='6forum', $retour) {
+function formulaires_inscription_rapide_charger_dist($statut='6forum', $retour='') {
+
 	$inscription_charger = charger_fonction("charger","formulaires/inscription");
 	return $inscription_charger($statut);
 }
@@ -27,7 +28,7 @@ function formulaires_inscription_rapide_charger_dist($statut='6forum', $retour) 
  * @param string $retour
  * @return array
  */
-function formulaires_inscription_rapide_verifier_dist($statut='6forum', $retour) {
+function formulaires_inscription_rapide_verifier_dist($statut='6forum', $retour='') {
 
 	// fournir le nom à partir de l'email
 	$nom = _request('mail_inscription');
@@ -48,7 +49,7 @@ function formulaires_inscription_rapide_verifier_dist($statut='6forum', $retour)
  * @param string $retour
  * @return array
  */
-function formulaires_inscription_rapide_traiter_dist($statut='6forum', $retour) {
+function formulaires_inscription_rapide_traiter_dist($statut='6forum', $retour='') {
 
 	$inscription_traiter = charger_fonction("traiter","formulaires/inscription");
 	$res = $inscription_traiter($statut);

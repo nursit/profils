@@ -46,6 +46,7 @@ function formulaires_editer_adresse_profil_traiter_dist($id_auteur){
 	if (isset($res['message_ok'])){
 		$res['message_ok'] = _T('editer_profil:message_ok_adresse_profil_modifie');
 		$res['editable'] = true;
+		set_request('modif');
 	}
 	return $res;
 }

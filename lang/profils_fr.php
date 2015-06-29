@@ -23,6 +23,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_auteur_adresse_pays' => 'Pays',
 	'label_auteur_tel_fixe' => 'Téléphone fixe',
 	'label_auteur_tel_mobile' => 'Téléphone mobile',
+	'label_inscription_adresse_email' => 'Votre adresse email&nbsp;:',
 	'label_partenaire_1' => 'Compte partenaire',
 	'label_avatar' => 'Nouvelle photo',
 	'label_votre_avatar' => 'Votre photo',

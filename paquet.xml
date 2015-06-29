@@ -1,9 +1,9 @@
 <paquet
 	prefix="profils"
 	categorie="outil"
-	version="0.5.3"
+	version="1.0.0"
 	etat="test"
-	compatibilite="];["
+	compatibilite="[3.0.0;3.1.*]"
 	logo="prive/themes/spip/images/profil-32.png"
 	schema="0.4.0"
 >	

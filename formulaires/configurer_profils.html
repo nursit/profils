@@ -12,7 +12,7 @@
 		#SET{fl,profils}
 		<fieldset>
 			<legend><:profils:legend_creation_automatique_profil:></legend>
-			<ul>
+			<ul class="editer-groupe">
 				#SET{name,creer_depuis_mailsubscriber}#SET{obli,''}#SET{defaut,'non'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 				<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
 					<span class='erreur_message'>(#GET{erreurs})</span>

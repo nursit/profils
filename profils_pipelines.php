@@ -54,7 +54,8 @@ function profils_formulaire_charger($flux){
 	if (in_array($flux['args']['form'],$GLOBALS['souscription_forms'])
 		AND !test_espace_prive()
 	  AND isset($GLOBALS['visiteur_session']['id_auteur'])
-	  AND $GLOBALS['visiteur_session']['id_auteur']){
+	  AND $GLOBALS['visiteur_session']['id_auteur']
+	  AND is_array($flux['data'])){
 
 		$flux['data']['recu_fiscal'] = 'on';
 		if (isset($GLOBALS['visiteur_session']['name']) AND $GLOBALS['visiteur_session']['name'])
@@ -162,7 +163,7 @@ function profils_verifier_auteur_souscription($id_souscription,&$champs,$notifie
 	if (!$id_auteur AND $email){
 
 		// cet auteur existe deja ?
-		if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email)." AND statut<>".sql_quote("5poub"))){
+		if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email)." AND statut<>".sql_quote("5poubelle"))){
 			$id_auteur = $row['id_auteur'];
 			$message = _T('profils:message_souscription_info_deja_profil',array('email' => $email));
 		}
@@ -178,8 +179,9 @@ function profils_verifier_auteur_souscription($id_souscription,&$champs,$notifie
 			if ($cadeau){
 				$cadeau['id_auteur'] = $id_auteur;
 				$champs['cadeau'] = serialize($cadeau);
-				// si jamais l'auteur est connu, on lui attribue la souscription, c'est mieux
-				if ($id2 = sql_getfetsel("id_auteur","spip_auteurs","email=".sql_quote($champs['courriel'])." AND statut<>".sql_quote("5poub"))){
+				// si jamais l'auteur de la souscription est connu, on lui attribue la souscription, c'est mieux
+				if ( ($email2 = $souscription_m['courriel'] OR $email2=$souscription['courriel'])
+				  AND $id2 = sql_getfetsel("id_auteur","spip_auteurs","email=".sql_quote($email2)." AND statut<>".sql_quote("5poubelle"))){
 					$champs['id_auteur'] = $id2;
 				}
 			}
@@ -220,7 +222,7 @@ function profils_post_edition($flux){
 		include_spip("inc/config");
 		if (lire_config("profils/creer_depuis_mailsubscriber","non")=='oui'){
 			if ($row = sql_fetsel("*","spip_mailsubscribers","id_mailsubscriber=".intval($id_mailsubscriber))){
-				if (!sql_fetsel("*","spip_auteurs","email=".sql_quote($row['email'])." AND statut<>".sql_quote("5poub"))){
+				if (!sql_fetsel("*","spip_auteurs","email=".sql_quote($row['email'])." AND statut<>".sql_quote("5poubelle"))){
 					include_spip("inc/profils");
 					$id_auteur = profils_creer_depuis_mailsubscriber($row,$notifier);
 				}
@@ -242,7 +244,7 @@ function profils_trig_bank_reglement_en_attente($flux){
 
 	if ($id_transaction=$flux['args']['id_transaction']
 	  AND lire_config("profils/creer_sur_paiements_attente", "non")=='oui'){
-		$res = profils_bank_traiter_reglement($flux);
+		$res = profils_bank_pre_facturer_reglement($flux);
 		$message = $res['data'];
 		sql_updateq("spip_transactions",array('message'=>$message),"id_transaction=".intval($id_transaction));
 	}
@@ -252,8 +254,13 @@ function profils_trig_bank_reglement_en_attente($flux){
 
 function profils_bank_pre_facturer_reglement($flux){
 
-	$souscription = sql_fetsel("*", "spip_souscriptions", 'id_transaction_echeance=' . intval($flux['args']['id_transaction']));
 	$transaction = sql_fetsel("*", "spip_transactions", 'id_transaction=' . intval($flux['args']['id_transaction']));
+	$souscription = sql_fetsel("*", "spip_souscriptions", 'id_transaction_echeance=' . intval($flux['args']['id_transaction']));
+	if (!$souscription
+		AND $transaction['parrain']=='souscription'
+		AND $id_souscription = $transaction['tracking_id']){
+		$souscription = sql_fetsel("*", "spip_souscriptions", 'id_souscription=' . intval($id_souscription));
+	}
 	$set = array();
 	include_spip("inc/config");
 	if ($souscription

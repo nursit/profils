@@ -138,9 +138,13 @@ function profils_pre_edition($flux){
  */
 function profils_verifier_auteur_souscription($id_souscription,&$champs,$notifier = true){
 	$id_auteur = 0;
-	$souscription = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($id_souscription));
 	$message = "";
 	$cadeau = false;
+
+	if (!$souscription = sql_fetsel("*","spip_souscriptions","id_souscription=".intval($id_souscription))){
+		return "";
+	}
+
 
 	$souscription_m = array_merge($souscription,$champs);
 	// attention si c'est un cadeau prendre l'email du destinataire du cadeau

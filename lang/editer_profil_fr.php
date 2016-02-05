@@ -21,6 +21,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'erreur_name_obligatoire' => 'Vous devez indiquer votre nom.',
 	'erreur_prenom_obligatoire' => 'Vous devez indiquer votre prénom.',
 	'erreur_email_obligatoire' => 'Il nous faut un email pour vous joindre.',
+	'erreur_email_doublon' => 'Un compte existe déjà avec cette adresse email.',
 	'erreur_adresse_obligatoire' => 'Vous devez renseigner votre adresse.',
 	'erreur_adresse_cp_obligatoire' => 'Vous devez renseigner votre code postal.',
 	'erreur_adresse_ville_obligatoire' => 'Vous devez renseigner votre ville.',

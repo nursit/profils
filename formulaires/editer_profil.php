@@ -48,6 +48,7 @@ function formulaires_editer_profil_charger_dist($id_auteur){
 
 function formulaires_editer_profil_verifier_dist($id_auteur){
 	$erreurs = array();
+	$auteur = sql_fetsel('*', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
 
 	$oblis = array('name',
 		'prenom',
@@ -65,10 +66,14 @@ function formulaires_editer_profil_verifier_dist($id_auteur){
 	// Verifier l'email
 	if (!isset($erreurs['email'])){
 		$email = trim(_request('email'));
-		if (!email_valide($email))
+		if (!email_valide($email)) {
 			$erreurs['email'] = _T('editer_profil:erreur_email_invalide');
-		else {
-			//...
+		}
+		// si email=login verifier l'unicite
+		elseif($auteur['email']==$auteur['login']) {
+			if (sql_countsel("spip_auteurs","(email=".sql_quote($email)." OR login=".sql_quote($email).") AND id_auteur!=".intval($id_auteur))){
+				$erreurs['email'] = _T('editer_profil:erreur_email_doublon');
+			}
 		}
 	}
 
@@ -80,9 +85,8 @@ function formulaires_editer_profil_verifier_dist($id_auteur){
 
 		$nb_articles = sql_countsel('spip_auteurs_liens AS L JOIN spip_articles as A ON (A.id_article=L.id_objet AND L.objet='.sql_quote('article').')', 'L.id_auteur=' . intval($id_auteur) . " AND L.objet='article' AND A.statut=".sql_quote('publie'));
 		if ($nb_articles>0){
-			$nom_auteur = sql_fetsel('nom', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
 			if (_request('nom')
-				AND _request('nom')!==$nom_auteur
+				AND _request('nom')!==$auteur['nom']
 			){
 				$erreurs['nom'] = _T('editer_profil:erreur_impossible_modifier_pseudo_auteur');
 			}
@@ -103,7 +107,7 @@ function formulaires_editer_profil_traiter_dist($id_auteur){
 		AND _request('email')!==$auteur['email']
 	){
 
-		// si c'�tait le login, changer aussi le login
+		// si c'etait le login, changer aussi le login
 		if ($auteur['email']==$auteur['login'])
 			set_request('login', _request('email'));
 

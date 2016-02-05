@@ -102,10 +102,13 @@ function formulaires_editer_profil_traiter_dist($id_auteur){
 	refuser_traiter_formulaire_ajax();
 	$auteur = sql_fetsel('*', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
 
+	$new_email = "";
 	// si l'email change
 	if (_request('email')
 		AND _request('email')!==$auteur['email']
 	){
+
+		$new_email = _request('email');
 
 		// si c'etait le login, changer aussi le login
 		if ($auteur['email']==$auteur['login'])
@@ -120,15 +123,17 @@ function formulaires_editer_profil_traiter_dist($id_auteur){
 	$res = formulaires_editer_objet_traiter('auteur', $id_auteur);
 
 	// si l'email change
-	if (_request('email')
-		AND _request('email')!==$auteur['email']
-	){
+	if ($new_email){
 
 		// securite si jamais la modif en base n'a pas eu lieu
 		$new_email = sql_getfetsel('email', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
 
 		// updater les abonnements dans mailsubscribers
-		sql_updateq("spip_mailsubscribers", array('email' => $new_email), "email=" . sql_quote($auteur['email']));
+		// si jamais il y a deja in subscriber sur le nouveau mail, ca ne fera rien, et l'ancien email continuera a recevoir
+		// a charge pour l'utilisateur de se desabonner manuellement sur l'ancien
+		if (test_plugin_actif("mailsubscribers")) {
+			sql_updateq("spip_mailsubscribers", array('email' => $new_email), "email=" . sql_quote($auteur['email']));
+		}
 	}
 
 	/*

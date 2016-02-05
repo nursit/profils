@@ -102,6 +102,17 @@ function profils_formulaire_traiter($flux){
  * @return mixed
  */
 function profils_pre_edition($flux){
+	// quand un auteur change d'email, noter le changement
+	// pour actualiser ses abonnements mailsubscribers si besoin dans post_edition
+	if ($flux['args']['type']=='auteur'
+		AND $id_auteur= $flux['args']['id_objet']
+	  AND isset($flux['data']['email'])){
+		$auteur = sql_fetsel('*', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
+		if ($flux['data']['email']!==$auteur['email']){
+			$GLOBALS['email_changed'][$flux['data']['email']] = $auteur['email'];
+		}
+	}
+
 	/*
 	if ($flux['args']['type']=='souscription'
 		AND $id_souscription = $flux['args']['id_objet']
@@ -214,6 +225,19 @@ function profils_post_edition($flux){
 	//ne pas envoyer de notif par exemple lors d'une inscription en masse a une newsletter
 	if (isset($GLOBALS['notification_instituermailsubscriber_status']) AND !$GLOBALS['notification_instituermailsubscriber_status'])
 		$notifier = false;
+
+	// quand un auteur change d'email, noter le changement
+	// pour actualiser ses abonnements mailsubscribers si besoin dans post_edition
+	if ($flux['args']['table']=='spip_auteurs'
+		AND $id_auteur= $flux['args']['id_objet']
+	  AND isset($flux['data']['email'])
+	  AND isset($GLOBALS['email_changed'][$flux['data']['email']])
+	  AND $old_email = $GLOBALS['email_changed'][$flux['data']['email']]){
+
+		if (test_plugin_actif("mailsubscribers")){
+			sql_updateq("spip_mailsubscribers", array('email' => $flux['data']['email']), "email=" . sql_quote($old_email));
+		}
+	}
 
 
 	if ($flux['args']['table']=='spip_mailsubscribers'

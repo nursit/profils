@@ -62,6 +62,8 @@ function formulaires_inscription_rapide_traiter_dist($statut='6forum', $retour='
 		include_spip('inc/auth');
 		$auteur = sql_fetsel("*","spip_auteurs","id_auteur=".intval($id_auteur));
 		auth_loger($auteur);
+
+		$res['message_ok'] = _T('profils:message_succes_inscription_rapide');
 	}
 
 	if ($retour){

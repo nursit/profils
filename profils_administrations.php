@@ -41,6 +41,11 @@ function profils_declarer_tables_objets_sql($tables){
 	$tables['spip_auteurs']['champs_editables'][] = 'adresse_pays';
 	$tables['spip_auteurs']['champs_editables'][] = 'tel_fixe';
 	$tables['spip_auteurs']['champs_editables'][] = 'tel_mobile';
+
+	$tables['spip_auteurs']['rechercher_champs']['name'] = 1;
+	$tables['spip_auteurs']['rechercher_champs']['prenom'] = 1;
+	$tables['spip_auteurs']['rechercher_champs']['societe'] = 1;
+
 	return $tables;
 }
 

@@ -45,6 +45,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	'message_confirmation_paiement_don' => '<br /><br />Vous pouvez retrouver tous vos dons et re&ccedil;us fiscaux dans <a href="@url@">votre espace lecteur</a>.',
 	'message_confirmation_paiement_adhesion' => '<br /><br />Vous pouvez retrouver les informations concernant votre adhésion dans <a href="@url@">votre espace adhérent</a>.',
+	'message_succes_inscription_rapide' => 'Merci, nous créons votre compte immédiatement !',
 
 
 	'bouton_acces_page_profil' => 'Accès à mon compte',

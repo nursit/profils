@@ -8,6 +8,23 @@
  */
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+/**
+ * @param $flux
+ * @return mixed
+ */
+function profils_affiche_milieu($flux){
+	if (isset($flux['args']['exec'])
+	  AND $flux['args']['exec']=='auteur'
+	  AND $id_auteur = $flux['args']['id_auteur']){
+
+		// si c'est bien un profil 6forum
+		if ($statut = sql_getfetsel("statut","spip_auteurs","id_auteur=".intval($id_auteur)." AND statut=".sql_quote("6forum"))){
+			$ins = recuperer_fond('prive/squelettes/inclure/profil',$flux['args']);
+			$flux['data'] .= $ins;
+		}
+	}
+	return $flux;
+}
 
 /**
  * Enrichir le formulaire editer_auteur avec les champs du profil

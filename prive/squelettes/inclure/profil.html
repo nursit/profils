@@ -1,0 +1,10 @@
+<BOUCLE_more(AUTEURS){id_auteur=#ENV{id_auteur}}{statut?}>
+<div class="nettoyeur"></div>
+
+[<textarea readonly="readonly" style="width: 100%;background: inherit;border:1px solid #ddd;color:#666;" rows="6">(#LOG)
+</textarea>]
+
+<div class="ajax">
+#FORMULAIRE_FUSIONNER_PROFIL{#ID_AUTEUR}
+</div>
+</BOUCLE_more>

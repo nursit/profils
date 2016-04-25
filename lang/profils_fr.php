@@ -12,6 +12,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_creer_sur_paiements_attente_oui' => 'Créer aussi les profils sur les paiements en attente',
 
 	'bouton_creer_compte' => 'Créer mon compte',
+	'bouton_fusionner' => 'Fusionner',
 	// L
 	'label_auteur_coordonnees' => "Coordonnées",
 	'label_auteur_name' => 'Nom',
@@ -27,6 +28,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_partenaire_1' => 'Compte partenaire',
 	'label_avatar' => 'Nouvelle photo',
 	'label_votre_avatar' => 'Votre photo',
+	'label_id_profil_import' => 'ID du profil a supprimer et fusionner avec celui-ci',
+	'label_confirmer_import' => 'Supprimer&importer ce profil ?',
+	'legend_fusion_profils' => 'Fusion de profils',
 	'info_partenaire' => 'Compte partenaire',
 	'info_adresse' => 'Adresse :',
 	'info_societe' => 'Société',
@@ -46,7 +50,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_confirmation_paiement_don' => '<br /><br />Vous pouvez retrouver tous vos dons et re&ccedil;us fiscaux dans <a href="@url@">votre espace lecteur</a>.',
 	'message_confirmation_paiement_adhesion' => '<br /><br />Vous pouvez retrouver les informations concernant votre adhésion dans <a href="@url@">votre espace adhérent</a>.',
 	'message_succes_inscription_rapide' => 'Merci, nous créons votre compte immédiatement !',
+	'message_fusion_profil_ok' => 'Les 2 comptes ont bien ete fusionnés',
 
+	'erreur_compte_inexistant' => 'Ce compte n\'existe pas.',
 
 	'bouton_acces_page_profil' => 'Accès à mon compte',
 	'bouton_deconnexion' => 'Déconnexion',
@@ -79,49 +85,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'explication_compte' => 'Cet espace vous permet de gérer votre compte, vos inscriptions newsletter, et votre abonnement.',
 
 );
-
-/*
-if (!defined('_ECRIRE_INC_VERSION')) return;
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
-
-	'bouton_favori_remove' => '<i class="icon-remove icon-white"></i> Retirer',
-	'bouton_confirmer_email' => 'Confirmer mon adresse mail',
-
-	'confirmsubscribe_invite_texte_email_1' => '@invite_email_from@ vous invite à vous inscrire à la Newsletter de @nom_site_spip@ avec l\'adresse email @email@. Voici son message :',
-	'confirmsubscribe_texte_email_2' => 'Pour confirmer votre inscription et recevoir les derniers articles de Basta !, toutes les deux semaines, merci de cliquer sur le lien suivant :
-@url_confirmsubscribe@',
-
-	'defaut_message_invite_email_subscribe' => 'Bonjour, je vous invite à découvrir @nom_site_spip@, journal en ligne sur les questions sociales et environnementales.',
-	'recommander' => 'Poster',
-	'forum_texte' => 'Texte de votre message <span>(4000 signes maximum)</span>',
-
-	'titre_don' => 'Dons',
-	'titre_favoris' => 'Favoris',
-
-	'explications_don' => 'Historique de vos dons.',
-	'explications_favoris'=> 'Un article vous intéresse, mais vous n\'avez pas le temps de le lire maintenant ? Cliquez sur le petit cœur, en haut de l\'article, et retrouvez-le dans votre interface à tout moment.',
-
-	'info_faire_un_don' => 'Faire un don',
-	'info_telecharger_les_recus_fiscaux' => 'Télécharger les reçus fiscaux :',
-	'info_telecharger_le_recu_fiscal' => 'Télécharger le reçu fiscal',
-
-	'label_resilier_abonnement' => 'X Résilier mon soutien mensuel',
-	'label_avancement_campagne_dons' => 'Avancement de la campagne : <b>@montant@</b> € sur <b>@objectif@ €</b> !',
-
-	'login_login2' => 'Adresse email :',
-
-	'message_souscription_info_creation_profil' => 'Un compte lecteur vous a été créé. Vous allez recevoir votre mot de passe à l\'adresse <b>@email@</b>.',
-
-	'pass_vousinscrire' => 'Créer votre espace lecteur',
-	'pass_forum_bla' => 'Votre espace lecteur vous permet de participer aux forums, de selectionner vos articles favoris pour les lire au calme et de gérer votre abonnement à la newsletter.',
-
-	'texte_confirmer_resilier_abonnement' => 'Êtes vous sûr de vouloir résilier votre soutien mensuel ?',
-
-
-	// souscription
-	'explication_bloc_fiscal_don' => 'Ces informations sont nécessaires pour établir votre reçu fiscal, qui sera disponible en début d\'année prochaine.',
-	'label_envoyer_info' => 'Je souhaite recevoir la newsletter bimensuelle',
-);
-*/
-?>

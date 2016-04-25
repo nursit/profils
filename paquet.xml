@@ -1,11 +1,11 @@
 <paquet
 	prefix="profils"
 	categorie="outil"
-	version="1.0.6"
+	version="1.1.0"
 	etat="test"
 	compatibilite="[3.0.0;3.1.*]"
 	logo="prive/themes/spip/images/profil-32.png"
-	schema="0.4.0"
+	schema="0.4.1"
 >	
 
 	<nom>Profils</nom>
@@ -22,6 +22,7 @@
 	<pipeline nom="post_edition" inclure="profils_pipelines.php" />
 	<pipeline nom="trig_bank_reglement_en_attente" inclure="profils_pipelines.php" />
 	<pipeline nom="boite_infos" inclure="profils_pipelines.php" />
+	<pipeline nom="affiche_milieu" inclure="profils_pipelines.php" />
 
 	<necessite nom="saisies" compatibilite="];[" />
 	<necessite nom="pays" compatibilite="];[" />

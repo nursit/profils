@@ -1,0 +1,39 @@
+<div class="formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id,nouveau}">
+	<h3 class="titrem"><:profils:legend_fusion_profils:></h3>
+	[<div class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</div>]
+	[<div class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</div>]
+	[(#ENV{editable})
+	<form method='post' action='#ENV{action}'><div>
+		[(#REM) declarer les hidden qui declencheront le service du formulaire
+		parametre : url d'action ]
+		#ACTION_FORMULAIRE{#ENV{action}}
+		#SET{fl,profils}
+		<ul class="editer-groupe">
+			#SET{name,id_profil_import}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
+			</li>
+		</ul>
+		[<div class="notice preview">
+			(#ENV**{erreurs/_confirmer_import})
+		</div>
+		<style>
+			.preview button,
+			.preview .icone.verticale,
+			.preview .icone.horizontale {display:none;}
+			.preview .champ.vide {display:none;}
+			.preview .champ>div {display:inline-block;}
+			.preview .champ>.label {font-weight: bold}
+			.preview a {color: inherit !important;}
+			.preview a:hover {color: inherit !important;text-decoration: inherit !important;cursor: inherit !important;}
+		</style>
+		]
+	  [(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+	  <!--extra-->
+	  <p class='boutons'><span class='image_loading'>&nbsp;</span>
+			<input type='submit' class='submit' value='<:profils:bouton_fusionner|attribut_html:>' /></p>
+	</div></form>
+	]
+</div>

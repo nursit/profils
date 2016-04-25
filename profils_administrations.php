@@ -31,6 +31,8 @@ function profils_declarer_tables_objets_sql($tables){
 	$tables['spip_auteurs']['field']["date_inscription"] = "datetime DEFAULT '0000-00-00 00:00:00' NOT NULL";
 	$tables['spip_auteurs']['field']['ip_inscription'] = "varchar(40) DEFAULT '' NOT NULL";
 
+	// log compte clienr
+	$tables['spip_auteurs']['field']['log'] = "longtext DEFAULT '' NOT NULL";
 
 	$tables['spip_auteurs']['champs_editables'][] = 'name';
 	$tables['spip_auteurs']['champs_editables'][] = 'prenom';
@@ -70,6 +72,9 @@ function profils_upgrade($nom_meta_base_version,$version_cible){
 		array('sql_alter','table spip_auteurs drop adresse_1'),
 		array('sql_alter','table spip_auteurs drop adresse_2'),
 		array('sql_alter','table spip_auteurs drop adresse_bp'),
+	);
+	$maj['0.4.1'] = array(
+		array('maj_tables',array('spip_auteurs')),
 	);
 
 	// lancer la maj

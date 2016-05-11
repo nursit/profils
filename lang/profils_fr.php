@@ -7,7 +7,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'cfg_titre_parametrages' => 'Configuration',
 	'legend_creation_automatique_profil' => 'Création automatique des profils',
 	'label_creer_depuis_mailsubscriber_oui' => 'Création automatique lors d\'une inscription à l\'Infolettre',
-	'label_creer_depuis_souscription_adhesion_oui' => 'Création automatique lors d\'une Ahésion',
+	'label_creer_depuis_souscription_adhesion_oui' => 'Création automatique lors d\'une Adhésion',
 	'label_creer_depuis_souscription_don_oui' => 'Création automatique lors d\'un Don',
 	'label_creer_sur_paiements_attente_oui' => 'Créer aussi les profils sur les paiements en attente',
 

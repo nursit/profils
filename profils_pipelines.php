@@ -192,7 +192,8 @@ function profils_verifier_auteur_souscription($id_souscription,&$champs,$notifie
 	}
 
 	// est-ce que l'auteur existe bien ?
-	if ($id_auteur AND !sql_countsel('spip_auteurs','id_auteur='.intval($id_auteur))){
+	// $id_auteur == -1 pour ne pas creer d'auteur
+	if ($id_auteur>0 AND !sql_countsel('spip_auteurs','id_auteur='.intval($id_auteur))){
 		$id_auteur = 0;
 	}
 

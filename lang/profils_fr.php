@@ -44,7 +44,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	'signature_equipe' => 'L\'équipe de @nom_site_spip@',
 
-	'message_souscription_info_creation_profil' => 'Un compte vous a été créé automatiquement. Vous allez recevoir à l\'adresse @email@ les informations pour y accèder.',
+	'message_souscription_info_creation_profil' => 'Un compte vous a été créé automatiquement. Vous allez recevoir à l\'adresse @email@ les informations pour y accéder.',
 	'message_souscription_info_deja_profil' => 'Cette souscription a été associée à votre compte déjà existant.',
 
 	'message_confirmation_paiement_don' => '<br /><br />Vous pouvez retrouver tous vos dons et re&ccedil;us fiscaux dans <a href="@url@">votre espace lecteur</a>.',

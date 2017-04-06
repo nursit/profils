@@ -42,32 +42,34 @@
 			<li class="fieldset">
 				<fieldset>
 					<legend><:editer_profil:legend_coordonnees:></legend>
-					#SET{name,adresse}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-	       <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
-	         <label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
-	         <span class='erreur_message'>(#GET{erreurs})</span>
-	         ]<textarea name="#GET{name}" class="textarea" rows="3">
+					<ul class="editer-groupe">
+						#SET{name,adresse}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+		        <li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+		          <label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
+		          <span class='erreur_message'>(#GET{erreurs})</span>
+		          ]<textarea name="#GET{name}" class="textarea" rows="3">
 #ENV*{#GET{name},#GET{defaut}}</textarea>
-	       </li>
-					#SET{name,adresse_cp}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-					<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
-						<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
-						<span class='erreur_message'>(#GET{erreurs})</span>
-						]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
-					</li>
-					#SET{name,adresse_ville}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-					<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
-						<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
-						<span class='erreur_message'>(#GET{erreurs})</span>
-						]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
-					</li>
-					[(#SAISIE{pays, adresse_pays, code_pays=oui, label=<:editer_profil:label_adresse_pays:>,defaut=FR})]
-					#SET{name,tel_fixe}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-					<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
-						<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
-						<span class='erreur_message'>(#GET{erreurs})</span>
-						]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
-					</li>
+		        </li>
+						#SET{name,adresse_cp}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
+						</li>
+						#SET{name,adresse_ville}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
+						</li>
+						[(#SAISIE{pays, adresse_pays, code_pays=oui, label=<:editer_profil:label_adresse_pays:>,defaut=FR})]
+						#SET{name,tel_fixe}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+						<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+							<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
+							<span class='erreur_message'>(#GET{erreurs})</span>
+							]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
+						</li>
+					</ul>
 				</fieldset>
 			</li>
 

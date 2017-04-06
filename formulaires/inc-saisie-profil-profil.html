@@ -1,7 +1,7 @@
     #SET{fl,profil}
 	<fieldset>
 		<legend><:profils:label_auteur_coordonnees:></legend>
-		<ul>
+		<[(#DIV|sinon{ul})] class="editer-groupe">
 			[(#SAISIE{input, name,	label=<:profils:label_auteur_name:>})]
       [(#SAISIE{input, prenom,	label=<:profils:label_auteur_prenom:>})]
       [(#SAISIE{input, societe,	label=<:profils:label_auteur_societe:>})]
@@ -11,5 +11,5 @@
 			[(#SAISIE{pays, adresse_pays, code_pays=oui, label=<:profils:label_auteur_adresse_pays:>,defaut=FR})]
 			[(#SAISIE{input, tel_fixe, label=<:profils:label_auteur_tel_fixe:>})]
 			[(#SAISIE{input, tel_mobile, label=<:profils:label_auteur_tel_mobile:>})]
-		</ul>
+		</[(#DIV|sinon{ul})]>
 	</fieldset>

@@ -159,6 +159,7 @@ function profils_pre_edition($flux){
 
 /**
  * Verifier/creer l'auteur d'une souscription
+ * @deprecated
  * @param $id_souscription
  * @param $champs
  * @param bool $notifier
@@ -203,14 +204,14 @@ function profils_verifier_auteur_souscription($id_souscription,&$champs,$notifie
 		// cet auteur existe deja ?
 		if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email)." AND statut<>".sql_quote("5poubelle"))){
 			$id_auteur = $row['id_auteur'];
-			$message = _T('profils:message_souscription_info_deja_profil',array('email' => $email));
+			$message = _T('profils:message_info_creation_profil',array('email' => $email));
 		}
 		else {
 			include_spip("inc/profils");
 			if ($cadeau AND !isset($champs['cadeau']))
 				$champs['cadeau'] = serialize($cadeau);
 			if ($id_auteur = profils_creer_depuis_souscription($souscription,$notifier)){
-				$message = _T('profils:message_souscription_info_creation_profil',array('email' => $email));
+				$message = _T('profils:message_info_deja_profil',array('email' => $email));
 			}
 		}
 		if ($id_auteur){

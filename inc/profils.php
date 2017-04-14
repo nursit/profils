@@ -37,17 +37,17 @@ function profils_verifier_ou_creer_auteur_depuis_source($source, $champs,$notifi
 		$id_auteur = 0;
 	}
 
-	// si pas d'id_auteur deja connu pour la souscription
+	// si pas d'id_auteur deja connu
 	if (!$id_auteur){
 
 		// cet auteur existe deja ?
 		if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email)." AND statut<>".sql_quote("5poubelle"))){
 			$id_auteur = $row['id_auteur'];
-			$message = _T('profils:message_info_creation_profil',array('email' => $email));
+			$message = _T('profils:message_info_deja_profil',array('email' => $email));
 		}
 		else {
 			if ($id_auteur = profils_creer_depuis_source($source, $champs, $notifier)){
-				$message = _T('profils:message_info_deja_profil',array('email' => $email));
+				$message = _T('profils:message_info_creation_profil',array('email' => $email));
 			}
 		}
 

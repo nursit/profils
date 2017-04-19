@@ -1,4 +1,6 @@
-    #SET{fl,profil}
+	[(#ENV{config/edit_pass}|oui)
+	<button class="submit reset_password" type="submit" name="reset_password" value="1"><:profils:bouton_reset_password:></button>
+	]
 	<fieldset>
 		<legend><:profils:label_auteur_coordonnees:></legend>
 		<[(#DIV|sinon{ul})] class="editer-groupe">

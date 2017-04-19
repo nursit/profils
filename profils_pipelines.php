@@ -97,6 +97,43 @@ function profils_formulaire_charger($flux){
 }
 
 /**
+ * Generer un nouveau mot de passe et envoyer le mail
+ * @param $flux
+ * @return mixed
+ */
+function profils_formulaire_verifier($flux){
+$flux['data']['message_erreur']=' ';
+	if ($flux['args']['form'] == 'editer_auteur'
+	  and $id_auteur = $flux['args']['args'][0]
+	  and _request('reset_password')){
+
+		$auteur = sql_fetsel('*','spip_auteurs','id_auteur='.intval($id_auteur));
+		$config = auteurs_edit_config($auteur);
+		if ($config['edit_pass']) {
+			include_spip('inc/profils');
+			// on vide toutes les erreurs eventuelles car on ne submit rien en vrai
+			$flux['data'] = array();
+			if ($email = profils_regenerer_identifiants($id_auteur)) {
+				$flux['data']['message_ok'] = _T('profils:message_nouveaux_identifiants_ok',array('email'=>$email));
+				$flux['data']['message_erreur'] = '';
+			}
+			elseif($email===false) {
+				$flux['data']['message_erreur'] = _T('profils:message_nouveaux_identifiants_echec_envoi');
+			}
+			else {
+				$flux['data']['message_erreur'] = _T('profils:message_nouveaux_identifiants_echec_creation');
+			}
+		}
+		else {
+			$flux['data']['message_erreur'] = _T('profils:message_nouveaux_identifiants_echec_creation');
+		}
+	}
+
+	return $flux;
+}
+
+
+/**
  * Ajouter le message OK concernant la creation du profil a la volee
  * @param $flux
  * @return mixed

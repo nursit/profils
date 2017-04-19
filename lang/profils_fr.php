@@ -53,6 +53,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_succes_inscription_rapide' => 'Merci, nous créons votre compte immédiatement !',
 	'message_fusion_profil_ok' => 'Les 2 comptes ont bien ete fusionnés',
 
+	'message_nouveaux_identifiants_ok' => 'Les nouveaux identifiants de connexion ont été envoyés à @email@.',
+	'message_nouveaux_identifiants_echec_envoi' => 'Les nouveaux identifiants de connexion n\'ont pas pu être envoyés.',
+	'message_nouveaux_identifiants_echec' => 'Impossible de générer de nouveaux identifiants.',
+
 	'erreur_compte_inexistant' => 'Ce compte n\'existe pas.',
 
 	'bouton_acces_page_profil' => 'Accès à mon compte',
@@ -84,5 +88,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_pas_de_compte' => 'Je n\'ai pas encore de compte',
 	'bouton_deja_un_compte' => 'J\'ai déjà un compte',
 	'explication_compte' => 'Cet espace vous permet de gérer votre compte, vos inscriptions newsletter, et votre abonnement.',
+	'bouton_reset_password' => 'Générer un nouveau mot de passe et l\'envoyer par email',
 
 );

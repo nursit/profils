@@ -117,6 +117,8 @@ function profils_creer_depuis_source($source, $champs, $notifier=true){
 			'email' => $row['email'],
 			'pass' => $row['pass'],
 		);
+		// on merge avec les champs fournit en appel, qui sont passes au modele de notification donc
+		$contexte = array_merge($champs, $contexte);
 		$message = recuperer_fond($fond, $contexte);
 		include_spip("inc/notifications");
 		notifications_envoyer_mails($row['email'],$message);
@@ -223,6 +225,51 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 	// sql_updateq("spip_transactions",array('id_auteur'=>$id_auteur),"id_auteur=0 AND auteur=".sql_quote($row['email']));
 
 	return $id_auteur;
+}
+
+/**
+ * Renvoyer des identifiants
+ * @param int $id_auteur
+ * @param bool $notifier
+ * @param array $contexte
+ * @return string
+ */
+function profils_regenerer_identifiants($id_auteur, $notifier=true, $contexte = array()) {
+	if ($id_auteur){
+		$set = array();
+		include_spip('inc/access');
+		$set['pass'] = creer_pass_aleatoire();
+
+		include_spip('action/editer_auteur');
+		auteur_modifier($id_auteur,$set);
+
+		$row = sql_fetsel('*','spip_auteurs','id_auteur='.intval($id_auteur));
+		include_spip('inc/filtres');
+		if ($notifier
+			and $row['email']
+			and email_valide($row['email'])
+		  and trouver_fond($fond = 'modeles/mail_nouveaux_identifiants')){
+			// envoyer l'email avec login/pass
+			$c = array(
+				'id_auteur' => $id_auteur,
+				'nom' => $row['prenom']?$row['prenom']:$row['nom'],
+				'email' => $row['email'],
+				'pass' => $set['pass'],
+			);
+			// on merge avec les champs fournit en appel, qui sont passes au modele de notification donc
+			$contexte = array_merge($contexte, $c);
+			$message = recuperer_fond($fond, $contexte);
+			include_spip("inc/notifications");
+			notifications_envoyer_mails($row['email'],$message);
+
+			return $row['email'];
+		}
+
+		return false;
+
+	}
+
+	return '';
 }
 
 /**

@@ -102,7 +102,7 @@ function profils_formulaire_charger($flux){
  * @return mixed
  */
 function profils_formulaire_verifier($flux){
-$flux['data']['message_erreur']=' ';
+
 	if ($flux['args']['form'] == 'editer_auteur'
 	  and $id_auteur = $flux['args']['args'][0]
 	  and _request('reset_password')){

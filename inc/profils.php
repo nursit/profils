@@ -237,7 +237,7 @@ function profils_creer_depuis_souscription($champs, $notifier=true){
 function profils_regenerer_identifiants($id_auteur, $notifier=true, $contexte = array()) {
 	if ($id_auteur){
 		$set = array();
-		include_spip('inc/access');
+		include_spip('inc/acces');
 		$set['pass'] = creer_pass_aleatoire();
 
 		include_spip('action/editer_auteur');

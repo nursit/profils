@@ -31,7 +31,7 @@ function profils_declarer_tables_objets_sql($tables){
 	$tables['spip_auteurs']['field']["date_inscription"] = "datetime DEFAULT '0000-00-00 00:00:00' NOT NULL";
 	$tables['spip_auteurs']['field']['ip_inscription'] = "varchar(40) DEFAULT '' NOT NULL";
 
-	// log compte clienr
+	// log compte client
 	$tables['spip_auteurs']['field']['log'] = "longtext DEFAULT '' NOT NULL";
 
 	$tables['spip_auteurs']['champs_editables'][] = 'name';

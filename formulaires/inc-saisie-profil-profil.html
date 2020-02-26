@@ -1,13 +1,9 @@
-	[(#ENV{config/edit_pass}|oui)
-	<input type="submit" class="over offscreen" name="submit" value="submit" />
-	<button class="submit reset_password" type="submit" name="reset_password" value="1"><:profils:bouton_reset_password:></button>
-	]
 	<fieldset>
 		<legend><:profils:label_auteur_coordonnees:></legend>
 		<[(#DIV|sinon{ul})] class="editer-groupe">
 			[(#SAISIE{input, name,	label=<:profils:label_auteur_name:>})]
-      [(#SAISIE{input, prenom,	label=<:profils:label_auteur_prenom:>})]
-      [(#SAISIE{input, societe,	label=<:profils:label_auteur_societe:>})]
+			[(#SAISIE{input, prenom,	label=<:profils:label_auteur_prenom:>})]
+			[(#SAISIE{input, societe,	label=<:profils:label_auteur_societe:>})]
 			[(#SAISIE{textarea, adresse, label=<:profils:label_auteur_adresse:>})]
 			[(#SAISIE{input, adresse_cp, label=<:profils:label_auteur_adresse_cp:>})]
 			[(#SAISIE{input, adresse_ville, label=<:profils:label_auteur_adresse_ville:>})]

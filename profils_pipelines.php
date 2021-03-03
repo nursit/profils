@@ -49,11 +49,13 @@ function profils_formulaire_fond($flux){
 }
 
 function profils_boite_infos($flux){
-	if ($flux['args']['type']=='auteur'
-	  AND $id_auteur = $flux['args']['id']
-	  AND include_spip('inc/autoriser')
-		AND autoriser('webmestre')){
-
+	if (
+		isset($flux['args']['type'])
+		&& $flux['args']['type'] === 'auteur'
+		&& $id_auteur = $flux['args']['id']
+		&& include_spip('inc/autoriser')
+		&& autoriser('webmestre')
+	) {
 		// on peut s'autologer a la place d'un visiteur
 		if ($statut = sql_getfetsel("statut","spip_auteurs","id_auteur=".intval($id_auteur)." AND statut=".sql_quote("6forum"))){
 			include_spip('inc/actions');
@@ -146,12 +148,15 @@ function profils_formulaire_verifier($flux){
  * @return mixed
  */
 function profils_formulaire_traiter($flux){
-	if (!isset($GLOBALS['souscription_forms']))
+	if (!isset($GLOBALS['souscription_forms'])) {
 		$GLOBALS['souscription_forms'] = array('souscription');
+	}
 
-	if (in_array($flux['args']['form'],$GLOBALS['souscription_forms'])
+	if (
+		in_array($flux['args']['form'], $GLOBALS['souscription_forms'])
 		AND $id_souscription = $flux['data']['id_souscription']
-		AND isset($GLOBALS['message_ok_souscription_'.$id_souscription])){
+		AND isset($GLOBALS['message_ok_souscription_'.$id_souscription])
+	) {
 		$flux['data']['message_ok'] .= "<br />" . $GLOBALS['message_ok_souscription_'.$id_souscription];
 	}
 	return $flux;
@@ -165,11 +170,14 @@ function profils_formulaire_traiter($flux){
 function profils_pre_edition($flux){
 	// quand un auteur change d'email, noter le changement
 	// pour actualiser ses abonnements mailsubscribers si besoin dans post_edition
-	if ($flux['args']['type']=='auteur'
-		AND $id_auteur= $flux['args']['id_objet']
-	  AND isset($flux['data']['email'])){
+	if (
+		isset($flux['args']['type'])
+		&& $flux['args']['type'] === 'auteur'
+		&& $id_auteur = $flux['args']['id_objet']
+		&& isset($flux['data']['email'])
+	) {
 		$auteur = sql_fetsel('*', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
-		if ($flux['data']['email']!==$auteur['email']){
+		if ($flux['data']['email'] !== $auteur['email']){
 			$GLOBALS['email_changed'][$flux['data']['email']] = $auteur['email'];
 		}
 	}

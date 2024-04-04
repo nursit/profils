@@ -132,7 +132,7 @@ function profils_importer_vieilles_souscriptions(){
 		}
 		if ($id_auteur){
 			$trans = sql_allfetsel("id_objet","spip_souscriptions_liens","id_souscription=".intval($sou['id_souscription'])." AND objet=".sql_quote('transaction'));
-			$trans = array_map('reset',$trans);
+			$trans = array_column($trans, 'id_objet');
 			sql_updateq("spip_transactions",array('id_auteur'=>$id_auteur),"id_auteur=0 AND ".sql_in('id_transaction',$trans));
 		}
 

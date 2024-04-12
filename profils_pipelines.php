@@ -52,7 +52,7 @@ function profils_boite_infos($flux){
 	if (
 		isset($flux['args']['type'])
 		&& $flux['args']['type'] === 'auteur'
-		&& $id_auteur = $flux['args']['id']
+		&& ($id_auteur = $flux['args']['id'])
 		&& include_spip('inc/autoriser')
 		&& autoriser('webmestre')
 	) {

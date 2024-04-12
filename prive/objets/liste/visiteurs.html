@@ -28,9 +28,9 @@
 				#REM|afficher_initiale{#REM,#TOTAL_BOUCLE,#GET{debut},#ENV{nb,10}}
 			}
 		})]</B_lettre>
-		[<tr><td colspan="6"><p class='pagination'>(#GET{p})</p></td></tr>]
+		[<tr><td colspan="6"><nav class='pagination'>(#GET{p})</nav></td></tr>]
 
-		[<tr><td colspan="6"><p class='pagination'>(#PAGINATION{prive})</p></td></tr>]
+		[<tr><td colspan="6"><nav class='pagination'>(#PAGINATION{prive})</nav></td></tr>]
 		<tr class='first_row'>
 			<th class='statut' scope='col'>[(#TRI{statut,#CHEMIN_IMAGE{auteur-16.png}|balise_img{<:lien_trier_statut|attribut_html:>},ajax})]</th>
 			<th class='messagerie' scope='col'></th>
@@ -55,12 +55,13 @@
 	[(#REM|changer_typo)]
 	</tbody>
 </table>
-[<p class='pagination'>(#PAGINATION{prive})</p>]
-<p class='pagination'>Afficher par
+[<nav class='pagination'>(#PAGINATION{prive})</nav>]
+<nav class='pagination'>Afficher par
 	[(#SELF|parametre_url{nb,30}|lien_ou_expose{30,#ENV{nb,10}|=={30}}) | ]
 	[(#SELF|parametre_url{nb,100}|lien_ou_expose{100,#ENV{nb,10}|=={100}}) | ]
 	[(#SELF|parametre_url{nb,300}|lien_ou_expose{300,#ENV{nb,10}|=={300}}) | ]
-	[(#SELF|parametre_url{nb,1000}|lien_ou_expose{1000,#ENV{nb,10}|=={1000}})]</p>
+	[(#SELF|parametre_url{nb,1000}|lien_ou_expose{1000,#ENV{nb,10}|=={1000}})]
+</nav>
 </div>
 </B_liste_aut>[
 <div class="liste-objets auteurs caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>

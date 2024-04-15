@@ -2,8 +2,7 @@
 
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
-
+return [
 	'cfg_titre_parametrages' => 'Configuration',
 	'legend_creation_automatique_profil' => 'Création automatique des profils',
 	'label_creer_depuis_mailsubscriber_oui' => 'Création automatique lors d\'une inscription à l\'Infolettre',
@@ -85,5 +84,4 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_deja_un_compte' => 'J\'ai déjà un compte',
 	'explication_compte' => 'Cet espace vous permet de gérer votre compte, vos inscriptions newsletter, et votre abonnement.',
 	'bouton_reset_password' => 'Générer un nouveau mot de passe et l\'envoyer par email',
-
-);
+];

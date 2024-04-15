@@ -2,7 +2,7 @@
 
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 	'legend_coordonnees' => "Coordonnées",
 	'legend_newsletter' => "Newsletter",
 	'label_nom' => 'Pseudo ',
@@ -32,5 +32,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_ok_profil_modifie' => 'Merci, vos informations ont été mises à jour.',
 	'message_ok_adresse_profil_modifie' => 'Merci, votre adresse a été mise à jour.',
 
-);
+];
 

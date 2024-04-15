@@ -10,10 +10,8 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
-
+return [
 // C
 	'profils_description' => 'Comptes profils',
 	'profils_slogan' => 'Comptes profils',
-);
-?>
+];

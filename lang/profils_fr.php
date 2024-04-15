@@ -53,10 +53,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_succes_inscription_rapide' => 'Merci, nous créons votre compte immédiatement !',
 	'message_fusion_profil_ok' => 'Les 2 comptes ont bien ete fusionnés',
 
-	'message_nouveaux_identifiants_ok' => 'Les nouveaux identifiants de connexion ont été envoyés à @email@.',
-	'message_nouveaux_identifiants_echec_envoi' => 'Les nouveaux identifiants de connexion n\'ont pas pu être envoyés.',
-	'message_nouveaux_identifiants_echec' => 'Impossible de générer de nouveaux identifiants.',
-
 	'erreur_compte_inexistant' => 'Ce compte n\'existe pas.',
 
 	'bouton_acces_page_profil' => 'Accès à mon compte',

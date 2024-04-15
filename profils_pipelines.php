@@ -37,13 +37,6 @@ function profils_formulaire_fond($flux){
 			$complement = recuperer_fond('formulaires/inc-saisie-profil-profil', $flux['args']['contexte']);
 			$flux['data'] = substr_replace($flux['data'],$complement,$p,0);
 		}
-		// Bouton reset password pour SPIP < 3.2
-		if (version_compare($GLOBALS['spip_version_branche'], '3.2.0', '<')) {
-			if (preg_match(",<(li|div) [^>]*class=[\"']editer editer_new_pass2.*>(.*)<\/(li|div)>, Uims", $flux['data'],$regs)){
-				$reset = recuperer_fond('formulaires/inc-saisie-profil-reset-password', $flux['args']['contexte']);
-				$flux['data'] = str_replace($regs[0], $regs[0] . $reset, $flux['data']);
-			}
-		}
 	}
 	return $flux;
 }
@@ -84,42 +77,6 @@ function profils_formulaire_charger($flux){
 		elseif (isset($GLOBALS['visiteur_session']['tel_mobile']) AND $GLOBALS['visiteur_session']['tel_mobile'])
 			$flux['data']['telephone'] = $GLOBALS['visiteur_session']['tel_mobile'];
 	}
-	return $flux;
-}
-
-/**
- * Generer un nouveau mot de passe et envoyer le mail
- * @param $flux
- * @return mixed
- */
-function profils_formulaire_verifier($flux){
-
-	if ($flux['args']['form'] == 'editer_auteur'
-	  and $id_auteur = $flux['args']['args'][0]
-	  and _request('profil_reset_password')){
-
-		$auteur = sql_fetsel('*','spip_auteurs','id_auteur='.intval($id_auteur));
-		$config = auteurs_edit_config($auteur);
-		if ($config['edit_pass']) {
-			include_spip('inc/profils');
-			// on vide toutes les erreurs eventuelles car on ne submit rien en vrai
-			$flux['data'] = array();
-			if ($email = profils_regenerer_identifiants($id_auteur)) {
-				$flux['data']['message_ok'] = _T('profils:message_nouveaux_identifiants_ok',array('email'=>$email));
-				$flux['data']['message_erreur'] = '';
-			}
-			elseif($email===false) {
-				$flux['data']['message_erreur'] = _T('profils:message_nouveaux_identifiants_echec_envoi');
-			}
-			else {
-				$flux['data']['message_erreur'] = _T('profils:message_nouveaux_identifiants_echec_creation');
-			}
-		}
-		else {
-			$flux['data']['message_erreur'] = _T('profils:message_nouveaux_identifiants_echec_creation');
-		}
-	}
-
 	return $flux;
 }
 

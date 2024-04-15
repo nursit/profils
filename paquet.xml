@@ -17,7 +17,6 @@
 	<pipeline nom="declarer_tables_objets_sql" inclure="profils_administrations.php" />
 	<pipeline nom="formulaire_fond" inclure="profils_pipelines.php" />
 	<pipeline nom="formulaire_charger" inclure="profils_pipelines.php" />
-	<pipeline nom="formulaire_verifier" inclure="profils_pipelines.php" />
 	<pipeline nom="formulaire_traiter" inclure="profils_pipelines.php" />
 	<pipeline nom="pre_edition" inclure="profils_pipelines.php" />
 	<pipeline nom="post_edition" inclure="profils_pipelines.php" />
